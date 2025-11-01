@@ -1,0 +1,119 @@
+import styled from 'styled-components';
+
+export const PageContainer = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+export const LeftSide = styled.div`
+  flex: 1;
+  background: url('https://via.placeholder.com/720x1080') center/cover no-repeat;
+
+  @media (max-width: 768px) {
+    height: 300px;
+  }
+`;
+
+export const RightSide = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+  }
+`;
+
+export const Logo = styled.img`
+  width: 50px;
+  height: 50px;
+  margin-bottom: 20px;
+`;
+
+export const Heading1 = styled.h1`
+  font-size: 48px;
+  margin: 0 0 10px 0;
+`;
+
+export const Heading2 = styled.h2`
+  font-size: 24px;
+  font-weight: normal;
+  margin: 0 0 30px 0;
+`;
+
+export const Button = styled.button<{ variant?: 'google' | 'email' }>`
+  width: 100%;
+  padding: 12px 20px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+
+  ${({ variant }) =>
+    variant === 'google'
+        ? `
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+  `
+        : `
+    background-color: #1da1f2;
+    color: #fff;
+  `}
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+`;
+
+export const Text = styled.p`
+  font-size: 14px;
+  color: #657786;
+  margin-bottom: 15px;
+
+  a {
+    color: #1da1f2;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+export const Footer = styled.footer`
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: #657786;
+  margin-top: 40px;
+
+  a {
+    margin-right: 15px;
+    margin-bottom: 5px;
+    color: #657786;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
