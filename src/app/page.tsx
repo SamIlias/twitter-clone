@@ -1,66 +1,50 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Image from 'next/image';
 
-export default function Home() {
+import { GoogleAuthButton, WithEmailAuthButton } from '@/features/auth';
+import { TwitterLogo } from '@/shared/ui/TwitterLogo';
+
+import s from './page.module.scss';
+
+function SignUpMain() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className={s.pageContainer}>
+      <div className={s.cover}>
+        <div className={s.background}>
+          <Image src="/cover.png" alt="cover" fill style={{ objectFit: 'cover' }} />
+        </div>
+        <div className={s.wrapper}>
+          <div className={s.logoCover}>
+            <h1>Modsen</h1>
+            <Image src="/logo.png" alt="logo" fill style={{ objectFit: 'contain', zIndex: 2 }} />
+          </div>
+        </div>
+      </div>
+
+      <div className={s.content}>
+        <div className={s.logo}>
+          <TwitterLogo />
+        </div>
+
+        <h1 className={s.heading1}>Happening now</h1>
+
+        <div className={s.contentInfo}>
+          <p className={s.heading2}>Join Twitter today</p>
+
+          <GoogleAuthButton />
+          <WithEmailAuthButton />
+
+          <p className={s.text}>
+            By signing up you agree to the <a href="#">Terms of Service</a> and{' '}
+            <a href="#">Privacy Policy</a>, including <a href="#">Cookie Use</a>.
+          </p>
+
+          <p className={s.text}>
+            Already have an account? <a href="#">Log in</a>
           </p>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
+
+export default SignUpMain;
