@@ -1,23 +1,54 @@
-import styles from './footer.module.scss';
-
 export function Footer() {
+  const linkClasses =
+    'mr-[15px] text-[color:var(--color-text-primary)] no-underline hover:underline';
+
   return (
-    <footer className={styles.footer}>
-      <a href="#">About</a>
-      <a href="#">Help Center</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Cookie Policy</a>
-      <a href="#">Ads info</a>
-      <a href="#">Blog</a>
-      <a href="#">Status</a>
-      <a href="#">Careers</a>
-      <a href="#">Brand Resources</a>
-      <a href="#">Advertising</a>
-      <a href="#">Marketing</a>
-      <a href="#">Twitter for Business</a>
-      <a href="#">Developers</a>
-      <a href="#">Settings</a>
-    </footer>
+    <div className="flex justify-center flex-wrap text-xs py-5">
+      <a className={linkClasses} href="#">
+        About
+      </a>
+      <a className={linkClasses} href="#">
+        Help Center
+      </a>
+      <a className={linkClasses} href="#">
+        Terms of Service
+      </a>
+      <a className={linkClasses} href="#">
+        Privacy Policy
+      </a>
+      <a className={linkClasses} href="#">
+        Cookie Policy
+      </a>
+      <a className={linkClasses} href="#">
+        Ads info
+      </a>
+      <a className={linkClasses} href="#">
+        Blog
+      </a>
+      <a className={linkClasses} href="#">
+        Status
+      </a>
+      <a className={linkClasses} href="#">
+        Careers
+      </a>
+      <a className={linkClasses} href="#">
+        Brand Resources
+      </a>
+      <a className={linkClasses} href="#">
+        Advertising
+      </a>
+      <a className={linkClasses} href="#">
+        Marketing
+      </a>
+      <a className={linkClasses} href="#">
+        Twitter for Business
+      </a>
+      <a className={linkClasses} href="#">
+        Developers
+      </a>
+      <a className={linkClasses} href="#">
+        Settings
+      </a>
+    </div>
   );
 }
