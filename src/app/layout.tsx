@@ -5,7 +5,6 @@ import { Geist, Geist_Mono, Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 
 import ThemeProviderWrapper from '@/shared/context/ThemeWrapper';
-import { Footer } from '@/widgets/Footer/Footer';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,10 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang="en">
       <body className={`h-screen ${geistSans.variable} ${geistMono.variable} ${inter.variable}`}>
-        <ThemeProviderWrapper>
-          {children}
-          <Footer />
-        </ThemeProviderWrapper>
+        <ThemeProviderWrapper>{children}</ThemeProviderWrapper>
       </body>
     </html>
   );
