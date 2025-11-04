@@ -29,7 +29,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`h-screen ${geistSans.variable} ${geistMono.variable} ${inter.variable}`}>
+      <body
+        className={`h-screen max-w-[1440px] mx-auto ${geistSans.variable} ${geistMono.variable} ${inter.variable}`}
+      >
         <ThemeProviderWrapper>{children}</ThemeProviderWrapper>
       </body>
     </html>
