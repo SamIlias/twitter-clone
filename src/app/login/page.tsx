@@ -8,19 +8,19 @@ function Login() {
   return (
     <div className="w-full h-full min-h-screen flex flex-col">
       <div className="h-full flex flex-col md:flex-row flex-1 md:bg-[url('/loginCover.png')] bg-cover bg-center">
-        <div className="relative h-1/3 md:h-full md:w-1/2">
-          <div className="absolute top-[15%] right-[35%] h-1/4 aspect-square">
+        <div className="relative h-full md:h-full md:w-1/2">
+          <div className="absolute top-[5%] md:top-[15%] right-[35%] h-1/4 aspect-square">
             <Image src="/lamp.png" alt="Lamp" fill className="object-contain" />
           </div>
 
-          <div className="absolute bottom-[15%] right-[10%] h-2/5 aspect-square">
+          <div className="absolute bottom-[15%] right-[10%] h-1/2 md:h-2/5 aspect-square">
             <Image src="/meditationBoy.png" alt="Boy" fill className="object-contain" />
           </div>
         </div>
 
-        <div className="h-full md:w-1/2 flex items-end justify-center px-8 lg:px-12">
-          <div className="md:h-2/3 h-full w-full p-10 lg:p-20 flex flex-col space-y-6 bg-white/70 dark:bg-gray-900/70 rounded-sm md:mb-30 shadow-lg">
-            <div className="flex justify-center md:justify-start mb-4">
+        <div className="h-full md:w-1/2 flex items-end justify-center px-4 md:px-8 lg:px-12">
+          <div className="md:h-3/4 h-full w-full p-4 md:p-10 lg:p-20 flex flex-col space-y-2 bg-white/70 dark:bg-gray-900/70 rounded-sm md:mb-20 md:mr-10 shadow-lg">
+            <div className="flex justify-center md:justify-start">
               <TwitterLogo />
             </div>
 

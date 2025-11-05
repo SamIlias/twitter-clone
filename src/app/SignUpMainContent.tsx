@@ -3,7 +3,7 @@ import { TwitterLogo } from '@/shared/ui/TwitterLogo';
 
 export function SignUpMainContent() {
   return (
-    <div className="flex-1 w-full md:w-1/2 flex flex-col md:gap-8 justify-center md:items-start items-center text-center p-[var(--spacing-md)]">
+    <div className="flex-1 w-full md:w-1/2 flex flex-col md:gap-8 justify-center md:items-start items-center text-center p-6 md:p-8">
       <div className="hidden md:block py-[var(--spacing-md)]">
         <TwitterLogo />
       </div>
