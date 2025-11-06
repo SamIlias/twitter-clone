@@ -1,16 +1,17 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
-import { Button } from '@/shared/ui/Button';
+import { ROUTES } from '@/shared/constants';
+import { Button, ButtonType } from '@/shared/ui/Button';
 
 export function LoginButton() {
   const router = useRouter();
   const handleClick = () => {
-    router.push('/login');
+    router.push(ROUTES.LOGIN);
   };
 
   return (
-    <Button variant={'primary'} onClick={handleClick}>
+    <Button variant={ButtonType.PRIMARY} onClick={handleClick}>
       Log in
     </Button>
   );

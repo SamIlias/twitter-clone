@@ -3,7 +3,11 @@ import { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 
 import { cn } from '@/shared/lib/utils';
 
-type ButtonType = 'primary' | 'secondary' | 'simple';
+export enum ButtonType {
+  PRIMARY = 'primary',
+  SECONDARY = 'secondary',
+  SIMPLE = 'simple',
+}
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonType;
@@ -13,7 +17,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button: FC<ButtonProps> = ({
   onClick,
   children,
-  variant = 'primary',
+  variant = ButtonType.PRIMARY,
   type = 'button',
   disabled = false,
   className,

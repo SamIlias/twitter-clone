@@ -1,17 +1,19 @@
 'use client';
 import Image from 'next/image';
 
-import { Button } from '@/shared/ui/Button';
+import icon from '@/shared/assets/icons/googleIcon.png';
+import { Button, ButtonType } from '@/shared/ui/Button';
 
+const ICON_ALT = 'Icon';
 const buttonIconSize = 32;
 
 export function GoogleAuthButton() {
   return (
-    <Button variant={'simple'} onClick={() => alert('sfa')}>
+    <Button variant={ButtonType.SIMPLE} onClick={() => alert('sfa')}>
       <Image
         className="pr-2"
-        src="/googleIcon.png"
-        alt="goggle icon"
+        src={icon}
+        alt={ICON_ALT}
         width={buttonIconSize}
         height={buttonIconSize}
       />

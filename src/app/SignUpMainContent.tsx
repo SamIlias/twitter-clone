@@ -1,5 +1,13 @@
 import { GoogleAuthButton, WithEmailAuthButton } from '@/features/auth';
+import { CustomLink } from '@/shared/ui/CustomLink';
 import { TwitterLogo } from '@/shared/ui/TwitterLogo';
+
+const LINKS = {
+  terms: '/terms',
+  privacy: '/privacy',
+  cookies: '/cookies',
+  login: '/login',
+};
 
 export function SignUpMainContent() {
   return (
@@ -20,25 +28,18 @@ export function SignUpMainContent() {
 
         <p className="text-sm mb-[15px]">
           {'By signing up you agree to the '}
-          <a href="#" className="text-[color:var(--color-text-link)] hover:underline">
-            {'Terms of Service '}
-          </a>
-          {'and '}
-          <a href="#" className="text-[color:var(--color-text-link)] hover:underline">
-            {'Privacy Policy '}
-          </a>
+          <CustomLink href={LINKS.terms} name={'Terms of Service'} />
+          {' and '}
+          <CustomLink href={LINKS.privacy} name={'Privacy Policy'} />
           {', including '}
-          <a href="#" className="text-[color:var(--color-text-link)] hover:underline">
-            {'Cookie Use'}
-          </a>
-          .
+          <CustomLink href={LINKS.cookies} name={'Cookie Use'} />
+          {'.'}
         </p>
 
-        <p className="text-sm mb-[15px]">
+        <p className="text-sm mb-4">
           {'Already have an account? '}
-          <a href="#" className="text-[color:var(--color-text-link)] hover:underline">
-            {'Log in'}
-          </a>
+          <CustomLink href={LINKS.login} name={'Log in'} />
+          {'.'}
         </p>
       </div>
     </div>

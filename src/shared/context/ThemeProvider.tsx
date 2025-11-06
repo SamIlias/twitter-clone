@@ -2,7 +2,14 @@
 
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
-type Theme = 'light' | 'dark';
+enum Theme {
+  LIGHT = 'light',
+  DARK = 'dark',
+}
+
+function isValidTheme(value: unknown): value is Theme {
+  return Object.values(Theme).includes(value as Theme);
+}
 
 interface ThemeContextType {
   theme: Theme;
@@ -14,12 +21,12 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'light';
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (savedTheme) return savedTheme;
+    if (typeof window === 'undefined') return Theme.LIGHT;
+    const savedTheme = localStorage.getItem('theme');
+    if (isValidTheme(savedTheme)) return savedTheme;
 
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return prefersDark ? 'dark' : 'light';
+    return prefersDark ? Theme.DARK : Theme.LIGHT;
   });
 
   useEffect(() => {
@@ -28,7 +35,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    setTheme((prev) => (prev === Theme.LIGHT ? Theme.DARK : Theme.LIGHT));
   };
 
   return <ThemeContext value={{ theme, toggleTheme, setTheme }}>{children}</ThemeContext>;

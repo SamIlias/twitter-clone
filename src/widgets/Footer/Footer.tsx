@@ -1,54 +1,35 @@
-export function Footer() {
-  const linkClasses =
-    'mr-[15px] text-[color:var(--color-text-primary)] no-underline hover:underline';
+import { CustomLink } from '@/shared/ui/CustomLink';
 
+type FooterLink = { href: string; name: string };
+const FOOTER_LINKS: FooterLink[] = [
+  { href: '/about', name: 'About' },
+  { href: '/help-center', name: 'Help Center' },
+  { href: '/terms', name: 'Terms of Service' },
+  { href: '/privacy', name: 'Privacy Policy' },
+  { href: '/cookies', name: 'Cookie Policy' },
+  { href: '/ads-info', name: 'Ads info' },
+  { href: '/blog', name: 'Blog' },
+  { href: '/status', name: 'Status' },
+  { href: '/careers', name: 'Careers' },
+  { href: '/brand-resources', name: 'Brand Resources' },
+  { href: '/advertising', name: 'Advertising' },
+  { href: '/marketing', name: 'Marketing' },
+  { href: '/twitter-for-business', name: 'Twitter for Business' },
+  { href: '/developers', name: 'Developers' },
+  { href: '/settings', name: 'Settings' },
+];
+
+export function Footer() {
   return (
     <div className="flex justify-center flex-wrap text-xs py-5">
-      <a className={linkClasses} href="#">
-        About
-      </a>
-      <a className={linkClasses} href="#">
-        Help Center
-      </a>
-      <a className={linkClasses} href="#">
-        Terms of Service
-      </a>
-      <a className={linkClasses} href="#">
-        Privacy Policy
-      </a>
-      <a className={linkClasses} href="#">
-        Cookie Policy
-      </a>
-      <a className={linkClasses} href="#">
-        Ads info
-      </a>
-      <a className={linkClasses} href="#">
-        Blog
-      </a>
-      <a className={linkClasses} href="#">
-        Status
-      </a>
-      <a className={linkClasses} href="#">
-        Careers
-      </a>
-      <a className={linkClasses} href="#">
-        Brand Resources
-      </a>
-      <a className={linkClasses} href="#">
-        Advertising
-      </a>
-      <a className={linkClasses} href="#">
-        Marketing
-      </a>
-      <a className={linkClasses} href="#">
-        Twitter for Business
-      </a>
-      <a className={linkClasses} href="#">
-        Developers
-      </a>
-      <a className={linkClasses} href="#">
-        Settings
-      </a>
+      {FOOTER_LINKS.map((link) => (
+        <CustomLink
+          key={link.href}
+          href={link.href}
+          name={link.name}
+          additionalClassName={'mx-2'}
+        />
+      ))}
     </div>
   );
 }
