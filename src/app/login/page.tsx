@@ -4,13 +4,10 @@ import LoginForm from '@/app/login/LoginForm';
 import loginCover from '@/shared/assets/covers/loginCover.png';
 import lamp from '@/shared/assets/images/lamp.png';
 import boy from '@/shared/assets/images/meditationBoy.png';
+import { ROUTES } from '@/shared/constants';
 import { CustomLink } from '@/shared/ui/CustomLink';
 import { TwitterLogo } from '@/shared/ui/TwitterLogo';
 import { Footer } from '@/widgets/Footer/Footer';
-
-const LOGIN_LINKS = {
-  signUp: '#',
-};
 
 const LAMP_ALT = 'lamp';
 const BOY_ALT = 'boy';
@@ -54,7 +51,7 @@ function Login() {
 
             <p className="text-center text-sm text-gray-700 dark:text-gray-300">
               {'Don’t have an account? '}
-              <CustomLink href={LOGIN_LINKS.signUp} name={'Sign Up to Twitter'} />
+              <CustomLink href={ROUTES.SIGN_UP} name={'Sign Up to Twitter'} />
             </p>
           </div>
         </div>

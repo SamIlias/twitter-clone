@@ -7,8 +7,10 @@ export const validationSchema = Yup.object({
     .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid mail format'),
   password: Yup.string()
     .required('Password is required')
+    .min(8, 'Minimum 8 characters')
+    .max(20, 'Maximum 15 characters')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-      'Password must contain a minimum of 8 characters, 1 lower case letter, 1 upper case letter',
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/,
+      'Password must contain upper, lower, number, and special character',
     ),
 });

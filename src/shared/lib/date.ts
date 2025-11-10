@@ -1,0 +1,25 @@
+export const months = {
+  January: 0,
+  February: 1,
+  March: 2,
+  April: 3,
+  May: 4,
+  June: 5,
+  July: 6,
+  August: 7,
+  September: 8,
+  October: 9,
+  November: 10,
+  December: 11,
+};
+
+export function isValidMonth(month: string): month is keyof typeof months {
+  return month in months;
+}
+
+export const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i);
+
+export function days(month: string, year: string) {
+  if (!month || !year || !isValidMonth(month)) return Array.from({ length: 31 }, (_, i) => i + 1);
+  return Array.from({ length: new Date(+year, months[month] + 1, 0).getDate() }, (_, i) => i + 1);
+}

@@ -1,18 +1,19 @@
 import { GoogleAuthButton, WithEmailAuthButton } from '@/features/auth';
+import { ROUTES } from '@/shared/constants';
 import { CustomLink } from '@/shared/ui/CustomLink';
 import { TwitterLogo } from '@/shared/ui/TwitterLogo';
 
 const LINKS = {
-  terms: '/terms',
-  privacy: '/privacy',
-  cookies: '/cookies',
-  login: '/login',
+  terms: '#',
+  privacy: '#',
+  cookies: '#',
+  login: ROUTES.LOGIN,
 };
 
 export function SignUpMainContent() {
   return (
     <div className="flex-1 w-full md:w-1/2 flex flex-col md:gap-8 justify-center md:items-start items-center text-center p-6 md:p-8">
-      <div className="hidden md:block py-[var(--spacing-md)]">
+      <div className="hidden md:block">
         <TwitterLogo />
       </div>
 

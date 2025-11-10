@@ -35,7 +35,7 @@ const InputFieldWithValidation: FC<InputFieldProps> = ({
         onChange={onChange}
         onBlur={onBlur}
         className={cn(
-          'border rounded-lg p-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500',
+          'border rounded-lg p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500',
           touched && hasError ? 'border-red-500' : 'border-gray-300 dark:border-gray-700',
         )}
       />
