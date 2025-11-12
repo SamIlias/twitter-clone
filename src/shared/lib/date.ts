@@ -20,6 +20,10 @@ export function isValidMonth(month: string): month is keyof typeof months {
 export const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i);
 
 export function days(month: string, year: string) {
-  if (!month || !year || !isValidMonth(month)) return Array.from({ length: 31 }, (_, i) => i + 1);
-  return Array.from({ length: new Date(+year, months[month] + 1, 0).getDate() }, (_, i) => i + 1);
+  if (!month || !isValidMonth(month)) return Array.from({ length: 31 }, (_, i) => i + 1);
+
+  const yearNum = year ? +year : new Date().getFullYear();
+  const daysInMonth = new Date(yearNum, months[month] + 1, 0).getDate();
+
+  return Array.from({ length: daysInMonth }, (_, i) => i + 1);
 }

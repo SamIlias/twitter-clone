@@ -12,6 +12,7 @@ interface InputFieldProps {
   touched?: boolean;
   hasError?: boolean;
   errorMessage?: string;
+  classNameAdd?: string;
 }
 
 const InputFieldWithValidation: FC<InputFieldProps> = ({
@@ -24,6 +25,7 @@ const InputFieldWithValidation: FC<InputFieldProps> = ({
   touched,
   hasError,
   errorMessage,
+  classNameAdd = '',
 }) => {
   return (
     <div className="flex flex-col">
@@ -37,6 +39,7 @@ const InputFieldWithValidation: FC<InputFieldProps> = ({
         className={cn(
           'border rounded-lg p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500',
           touched && hasError ? 'border-red-500' : 'border-gray-300 dark:border-gray-700',
+          classNameAdd,
         )}
       />
       {touched && hasError && errorMessage && (

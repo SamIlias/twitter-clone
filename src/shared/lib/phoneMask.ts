@@ -1,8 +1,8 @@
 export function maskPhone(value: string): string {
   const cleaned = value.replace(/\D/g, '');
 
-  if (cleaned.length === 0) {
-    return '+375(';
+  if (cleaned.length === 3) {
+    return '';
   }
 
   let numbers = cleaned;

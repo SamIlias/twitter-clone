@@ -3,7 +3,7 @@
 import { useFormik } from 'formik';
 import { useState } from 'react';
 
-import { validationSchema } from '@/app/login/lib/validationSchema';
+import { validationSchema } from '@/app/(auth)/login/lib/validationSchema';
 import { Button, ButtonType } from '@/shared/ui/Button';
 import InputFieldWithValidation from '@/shared/ui/InputField';
 

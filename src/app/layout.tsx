@@ -30,7 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang="en">
       <body
-        className={`h-screen max-w-[1440px] mx-auto ${geistSans.variable} ${geistMono.variable} ${inter.variable}`}
+        className={`min-h-screen max-w-[1440px] overflow-y-auto mx-auto ${geistSans.variable} ${geistMono.variable} ${inter.variable}`}
       >
         <ThemeProviderWrapper>{children}</ThemeProviderWrapper>
       </body>

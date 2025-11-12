@@ -1,15 +1,16 @@
 'use client';
 
 import { useFormik } from 'formik';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
-import { validationSchema } from '@/app/signup/lib/validationSchema';
+import { validationSchema } from '@/app/(auth)/signup/lib/validationSchema';
 import { ROUTES } from '@/shared/constants';
-import { days, months, years } from '@/shared/lib/date';
+import { days, isValidMonth, months, years } from '@/shared/lib/date';
 import { maskPhone } from '@/shared/lib/phoneMask';
 import { Button, ButtonType } from '@/shared/ui/Button';
 import { CustomLink } from '@/shared/ui/CustomLink';
 import InputFieldWithValidation from '@/shared/ui/InputField';
+import { PasswordEyeButton } from '@/shared/ui/PasswordEyeButton';
 import { SelectorWithValidation } from '@/shared/ui/Selector';
 
 export default function CreateUserForm() {
@@ -20,7 +21,7 @@ export default function CreateUserForm() {
   const formik = useFormik({
     initialValues: {
       name: '',
-      phone: '+375(',
+      phone: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -37,11 +38,34 @@ export default function CreateUserForm() {
     },
   });
 
+  const { values, setFieldValue } = formik;
+
+  useEffect(() => {
+    const currentDay = +values.day;
+    const currentMonth = values.month;
+    const currentYear = values.year;
+
+    if (!currentMonth || !isValidMonth(currentMonth)) return;
+
+    const maxDay = new Date(
+      currentYear ? +currentYear : new Date().getFullYear(),
+      months[currentMonth] + 1,
+      0,
+    ).getDate();
+
+    if (currentDay > maxDay) {
+      setFieldValue('day', maxDay);
+    }
+  }, [values.month, values.year, values.day, setFieldValue]);
+
   const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     const masked = maskPhone(input);
     formik.setFieldValue('phone', masked);
   };
+
+  const toggleShowConfirm = () => setShowConfirm((p) => !p);
+  const toggleShowPassword = () => setShowPassword((p) => !p);
 
   return (
     <form onSubmit={formik.handleSubmit} className="w-full flex flex-col space-y-3" noValidate>
@@ -90,13 +114,7 @@ export default function CreateUserForm() {
           hasError={!!formik.errors.password}
           errorMessage={formik.errors.password}
         />
-        <button
-          type="button"
-          className="absolute right-3 top-3 text-sm text-gray-500"
-          onClick={() => setShowPassword((p) => !p)}
-        >
-          {showPassword ? 'Hide' : 'Show'}
-        </button>
+        <PasswordEyeButton show={showPassword} onToggle={toggleShowPassword} />
       </div>
 
       <div className="relative">
@@ -111,20 +129,16 @@ export default function CreateUserForm() {
           hasError={!!formik.errors.confirmPassword}
           errorMessage={formik.errors.confirmPassword}
         />
-        <button
-          type="button"
-          className="absolute right-3 top-3 text-sm text-gray-500"
-          onClick={() => setShowConfirm((p) => !p)}
-        >
-          {showConfirm ? 'Hide' : 'Show'}
-        </button>
+        <PasswordEyeButton show={showConfirm} onToggle={toggleShowConfirm} />
       </div>
 
-      <CustomLink href={ROUTES.LOGIN} name={'Use Google'} />
+      <div className="flex">
+        <CustomLink href={ROUTES.LOGIN} name={'Use Google'} />
+      </div>
 
       <p className="text text-bold">Date of birth</p>
 
-      <div className="flex space-x-2 mb-8">
+      <div className="flex space-x-2">
         <SelectorWithValidation
           name={'month'}
           options={Object.keys(months)}
@@ -172,6 +186,7 @@ export default function CreateUserForm() {
         variant={ButtonType.PRIMARY}
         type="submit"
         disabled={isSubmitting || !formik.isValid || !formik.dirty}
+        className="mt-4"
       >
         {isSubmitting ? 'Creating...' : 'Create account'}
       </Button>
