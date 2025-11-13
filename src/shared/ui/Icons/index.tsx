@@ -2,7 +2,6 @@ import Image, { StaticImageData } from 'next/image';
 
 import hideIcon from '@/shared/assets/icons/eyeHide.png';
 import showIcon from '@/shared/assets/icons/eyeShow.png';
-import { useTheme } from '@/shared/context/ThemeProvider';
 
 interface ThemedIconProps {
   src: StaticImageData;
@@ -11,8 +10,6 @@ interface ThemedIconProps {
 }
 
 const ThemedIcon = ({ src, alt, size }: ThemedIconProps) => {
-  const { theme } = useTheme();
-
   return <Image src={src} alt={alt} width={size} height={size} />;
 };
 

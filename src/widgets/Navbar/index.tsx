@@ -32,7 +32,7 @@ const links = {
   MORE: { i: MoreIcon, t: 'More' },
 };
 
-export const Navbar: FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+export const Navbar: FC<{ isOpen: boolean }> = ({ isOpen }) => {
   const handleClick = () => {
     console.log('New tweet');
   };
@@ -47,7 +47,7 @@ export const Navbar: FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, o
         className={`fixed inset-0 bg-black transition-opacity duration-300 md:hidden z-40 ${
           isOpen ? 'opacity-50 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
-        onClick={onClose}
+        // onClick={onClose}
       />
 
       <nav
