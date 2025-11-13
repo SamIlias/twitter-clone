@@ -1,7 +1,7 @@
 import Image, { StaticImageData } from 'next/image';
 import { ReactNode } from 'react';
 
-import { Footer } from '@/widgets/Footer/Footer';
+import { Footer } from '@/widgets/Footer';
 
 interface AuthLayoutProps {
   cover: StaticImageData;

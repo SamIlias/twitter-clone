@@ -1,6 +1,6 @@
 import { SignUpMainContent } from '@/app/SignUpMainContent';
 import { SignUpMainCover } from '@/app/SignUpMainCover';
-import { Footer } from '@/widgets/Footer/Footer';
+import { Footer } from '@/widgets/Footer';
 
 function SignUpMain() {
   return (

@@ -2,7 +2,7 @@ import Image, { StaticImageData } from 'next/image';
 
 import hideIcon from '@/shared/assets/icons/eyeHide.png';
 import showIcon from '@/shared/assets/icons/eyeShow.png';
-import { Theme, useTheme } from '@/shared/context/ThemeProvider';
+import { useTheme } from '@/shared/context/ThemeProvider';
 
 interface ThemedIconProps {
   src: StaticImageData;
