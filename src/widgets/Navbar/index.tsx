@@ -3,9 +3,10 @@
 import Image from 'next/image';
 import { FC } from 'react';
 
-import ava from '@/shared/assets/avaImage.png';
+import { UserNameBlock } from '@/entities/User/ui/UserNameBlock';
+import ava from '@/shared/assets/exampleUser/avaImage.png';
 import { ROUTES } from '@/shared/constants';
-import { Button, ButtonType } from '@/shared/ui/Button';
+import { user } from '@/shared/constants/exampleUserData';
 import {
   BellIcon,
   BookmarksIcon,
@@ -20,6 +21,8 @@ import { SearchInput } from '@/shared/ui/SearchInput';
 import { TwitterLogo } from '@/shared/ui/TwitterLogo';
 import { AltTweetButton } from '@/widgets/Navbar/AltTweetButton';
 import { NavButton } from '@/widgets/Navbar/NavButton';
+
+import { Button, ButtonType } from '../../shared/ui/Buttons';
 
 const links = {
   HOME: { i: HomeIcon, t: 'Home' },
@@ -92,10 +95,11 @@ export const Navbar: FC<{ isOpen: boolean }> = ({ isOpen }) => {
           <div className="border-t border-gray-200 pt-4">
             <div className="flex items-center gap-3 mb-4 px-2">
               <Image src={ava} alt="avatar" width={40} height={40} />
-              <div className="flex-1">
-                <div className="font-bold text-sm">Ivan Ivanov</div>
-                <div className="text-gray-500 text-sm">@IvanIvanov</div>
-              </div>
+              <UserNameBlock
+                firstName={user.firstName}
+                secondName={user.secondName}
+                telegramLink={user.telegramLink}
+              />
             </div>
             <Button variant={ButtonType.SECONDARY} onClick={handleLogout}>
               Log out

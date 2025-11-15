@@ -7,11 +7,12 @@ import { validationSchema } from '@/app/(auth)/signup/lib/validationSchema';
 import { ROUTES } from '@/shared/constants';
 import { days, isValidMonth, months, years } from '@/shared/lib/date';
 import { maskPhone } from '@/shared/lib/phoneMask';
-import { Button, ButtonType } from '@/shared/ui/Button';
 import { CustomLink } from '@/shared/ui/CustomLink';
 import InputFieldWithValidation from '@/shared/ui/InputField';
 import { PasswordEyeButton } from '@/shared/ui/PasswordEyeButton';
 import { SelectorWithValidation } from '@/shared/ui/Selector';
+
+import { Button, ButtonType } from '../../../shared/ui/Buttons';
 
 export default function CreateUserForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);

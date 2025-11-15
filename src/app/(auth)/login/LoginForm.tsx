@@ -4,8 +4,9 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 
 import { validationSchema } from '@/app/(auth)/login/lib/validationSchema';
-import { Button, ButtonType } from '@/shared/ui/Button';
 import InputFieldWithValidation from '@/shared/ui/InputField';
+
+import { Button, ButtonType } from '../../../shared/ui/Buttons';
 
 export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);

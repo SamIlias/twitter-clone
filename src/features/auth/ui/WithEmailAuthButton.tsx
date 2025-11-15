@@ -2,7 +2,8 @@
 import { useRouter } from 'next/navigation';
 
 import { ROUTES } from '@/shared/constants';
-import { Button, ButtonType } from '@/shared/ui/Button';
+
+import { Button, ButtonType } from '../../../shared/ui/Buttons';
 
 export function WithEmailAuthButton() {
   const router = useRouter();
