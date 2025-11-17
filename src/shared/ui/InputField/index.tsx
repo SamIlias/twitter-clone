@@ -1,8 +1,8 @@
-import { ChangeEvent, FC, FocusEventHandler } from 'react';
+import { ChangeEvent, FC, FocusEventHandler, InputHTMLAttributes } from 'react';
 
 import { cn } from '@/shared/lib/utils';
 
-interface InputFieldProps {
+interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   type?: string;
   placeholder?: string;
@@ -26,10 +26,12 @@ const InputFieldWithValidation: FC<InputFieldProps> = ({
   hasError,
   errorMessage,
   classNameAdd = '',
+  ...props
 }) => {
   return (
     <div className="flex flex-col">
       <input
+        {...props}
         name={name}
         type={type}
         placeholder={placeholder}

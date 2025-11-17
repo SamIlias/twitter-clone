@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormik } from 'formik';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
 import { validationSchema } from '@/app/(auth)/signup/lib/validationSchema';
 import { ROUTES } from '@/shared/constants';
@@ -41,7 +41,7 @@ export default function CreateUserForm() {
 
   const { values, setFieldValue } = formik;
 
-  useEffect(() => {
+  useMemo(() => {
     const currentDay = +values.day;
     const currentMonth = values.month;
     const currentYear = values.year;

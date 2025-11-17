@@ -11,6 +11,7 @@ interface ButtonProps {
 export const ButtonWithScaling: FC<ButtonProps> = ({ handleClick, children, className = '' }) => {
   return (
     <button
+      type={'button'}
       onClick={handleClick}
       className={cn('cursor-pointer transition-transform hover:scale-110', className)}
     >

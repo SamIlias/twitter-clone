@@ -2,15 +2,14 @@
 import Image from 'next/image';
 
 import icon from '@/shared/assets/icons/googleIcon.png';
-
-import { Button, ButtonType } from '../../../shared/ui/Buttons';
+import { Button, ButtonType } from '@/shared/ui/Buttons';
 
 const ICON_ALT = 'Icon';
 const buttonIconSize = 32;
 
 export function GoogleAuthButton() {
   return (
-    <Button variant={ButtonType.SIMPLE} onClick={() => alert('sfa')}>
+    <Button variant={ButtonType.SIMPLE}>
       <Image
         className="pr-2"
         src={icon}

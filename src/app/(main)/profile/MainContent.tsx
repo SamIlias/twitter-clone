@@ -1,26 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { FC, useState } from 'react';
 
+import { ProfileContentHeader } from '@/app/(main)/profile/ProfileContentHeader';
 import { AddTweetForm } from '@/entities/Tweet/ui/AddTweetForm';
 import { TweetComponent } from '@/entities/Tweet/ui/Tweet';
 import { UserProfileInfo } from '@/entities/User/ui';
-import { user } from '@/shared/constants/exampleUserData';
+import { tweets, users } from '@/shared/constants/exampleUserData';
 
-export const MainContent = () => {
+interface ContentProps {
+  handleBurgerClick: () => void;
+}
+
+export const MainContent: FC<ContentProps> = ({ handleBurgerClick }) => {
   const [isEditing, setEditing] = useState(false);
+  const user = users[0];
+  const userTweets = tweets.filter((t) => t.userId === user.id);
 
   const handleEditClick = () => {
     setEditing(true);
   };
 
   return (
-    <div className="h-full">
+    <div className="h-full border-2 border-[var(--color-content-border)]">
+      <ProfileContentHeader user={user} handleBurgerClick={handleBurgerClick} />
       <UserProfileInfo user={user} handleEditClick={handleEditClick} />
-      <div className="flex flex-col gap-6 shadow-sm shadow-gray-500">
+      <div className="flex flex-col gap-6 ">
         <AddTweetForm user={user} />
+
         <div className="p-6 flex flex-col gap-6">
-          {user.tweets.map((tweet) => (
+          {userTweets.map((tweet) => (
             <TweetComponent key={tweet.id} tweet={tweet} user={user} />
           ))}
         </div>

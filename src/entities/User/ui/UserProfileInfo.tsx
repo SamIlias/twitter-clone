@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { FC } from 'react';
 
 import { User } from '@/entities/User/model/types';
+import { AvaImage } from '@/entities/User/ui/AvaImage';
 import { UserFollowsStat } from '@/entities/User/ui/UserFollowsStat';
 import { UserNameBlock } from '@/entities/User/ui/UserNameBlock';
 import { SimpleButton } from '@/shared/ui/Buttons/SimpleButton';
@@ -13,12 +14,7 @@ interface UserProfileProps {
 
 export const UserProfileInfo: FC<UserProfileProps> = ({ user, handleEditClick }) => {
   return (
-    <div className="shadow-gray-500 shadow-sm">
-      <div className="p-4">
-        <p className="font-bold text-md">{`${user.firstName} ${user.secondName}`}</p>
-        <p className="text-sm">{`${user.tweets.length} tweets`}</p>
-      </div>
-
+    <div className="shadow-gray-500/50 shadow-sm">
       <div className="h-[320px] grid grid-rows-[78%_1fr] relative">
         <div className="relative ">
           <Image src={user.bannerUrl} alt={'banner'} fill className="object-cover object-center" />
@@ -32,13 +28,7 @@ export const UserProfileInfo: FC<UserProfileProps> = ({ user, handleEditClick })
           />
         </div>
 
-        <Image
-          src={user.avaUrl}
-          alt={'ava'}
-          width={180}
-          height={180}
-          className="absolute bottom-0 left-3"
-        />
+        <AvaImage avaUrl={user.avaUrl} size={180} className="absolute bottom-0 left-3" />
       </div>
 
       <div className="p-4 flex flex-col gap-4">

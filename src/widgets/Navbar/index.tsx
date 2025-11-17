@@ -1,12 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import { FC } from 'react';
 
+import { AvaImage } from '@/entities/User/ui/AvaImage';
 import { UserNameBlock } from '@/entities/User/ui/UserNameBlock';
-import ava from '@/shared/assets/exampleUser/avaImage.png';
 import { ROUTES } from '@/shared/constants';
-import { user } from '@/shared/constants/exampleUserData';
+import { users } from '@/shared/constants/exampleUserData';
+import { Button, ButtonType } from '@/shared/ui/Buttons';
 import {
   BellIcon,
   BookmarksIcon,
@@ -22,8 +22,6 @@ import { TwitterLogo } from '@/shared/ui/TwitterLogo';
 import { AltTweetButton } from '@/widgets/Navbar/AltTweetButton';
 import { NavButton } from '@/widgets/Navbar/NavButton';
 
-import { Button, ButtonType } from '../../shared/ui/Buttons';
-
 const links = {
   HOME: { i: HomeIcon, t: 'Home' },
   EXPLORE: { i: ExploreIcon, t: 'Explore' },
@@ -35,7 +33,12 @@ const links = {
   MORE: { i: MoreIcon, t: 'More' },
 };
 
-export const Navbar: FC<{ isOpen: boolean }> = ({ isOpen }) => {
+export const Navbar: FC<{ isOpen: boolean; toggleNavAction: () => void }> = ({
+  isOpen,
+  toggleNavAction,
+}) => {
+  const user = users[0];
+
   const handleClick = () => {
     console.log('New tweet');
   };
@@ -47,23 +50,31 @@ export const Navbar: FC<{ isOpen: boolean }> = ({ isOpen }) => {
   return (
     <>
       <div
-        className={`fixed inset-0 bg-black transition-opacity duration-300 md:hidden z-40 ${
-          isOpen ? 'opacity-50 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 bg-black transition-opacity duration-300 md:hidden z-10 ${
+          isOpen ? 'opacity-90 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
-        // onClick={onClose}
-      />
+        onClick={toggleNavAction}
+      ></div>
 
       <nav
-        className={`fixed top-0 left-0 h-full z-50 transition-transform duration-300 ease-in-out md:sticky md:translate-x-0 w-72 ${
+        className={`fixed top-0 left-0 h-full z-50 transition-transform duration-300 ease-in-out md:sticky md:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
+        <button
+          type="button"
+          onClick={toggleNavAction}
+          className="md:hidden absolute z-20 top-2 right-2 bg-gray-800 bg-opacity-75 hover:bg-gray-600 text-white rounded-full w-6 h-6 flex items-center justify-center transition cursor-pointer"
+        >
+          ×
+        </button>
+
         <div className="h-full flex flex-col px-4 py-3">
           <div className="mb-6 md:block">
             <TwitterLogo />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 md:hidden">
             <SearchInput onSearch={() => {}} placeholder="Search Twitter" />
           </div>
 
@@ -94,7 +105,7 @@ export const Navbar: FC<{ isOpen: boolean }> = ({ isOpen }) => {
 
           <div className="border-t border-gray-200 pt-4">
             <div className="flex items-center gap-3 mb-4 px-2">
-              <Image src={ava} alt="avatar" width={40} height={40} />
+              <AvaImage avaUrl={user.avaUrl} size={40} />
               <UserNameBlock
                 firstName={user.firstName}
                 secondName={user.secondName}

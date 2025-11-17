@@ -1,25 +1,11 @@
 import './globals.css';
 
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 
 import ThemeProviderWrapper from '@/shared/context/ThemeWrapper';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const inter = Inter({
-  variable: '--font-inter',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+import { geistMono, geistSans, inter } from '../../public/fonts';
 
 export const metadata: Metadata = {
   title: 'Twitter clone',

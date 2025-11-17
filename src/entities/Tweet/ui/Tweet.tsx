@@ -2,8 +2,8 @@ import Image from 'next/image';
 import { FC, useState } from 'react';
 
 import { Tweet } from '@/entities/Tweet/model/types';
-import { AvaImage } from '@/entities/Tweet/ui/AvaImage';
 import { User } from '@/entities/User/model/types';
+import { AvaImage } from '@/entities/User/ui/AvaImage';
 import { UserNameBlock } from '@/entities/User/ui/UserNameBlock';
 import { ButtonWithScaling } from '@/shared/ui/Buttons/ButtonWithScaling';
 import { HeartIcon } from '@/shared/ui/Icons/SVG';

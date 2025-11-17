@@ -1,17 +1,28 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+
+export type FileWithId = {
+  file: File;
+  id: number;
+};
 
 export const useImageValidation = (
-  maxImages: number,
+  maxImagesCount: number,
   maxFileSize: number,
   onError: (err: string) => void,
 ) => {
-  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [selectedImages, setSelectedImages] = useState<FileWithId[]>([]);
+
+  const fileIdCounter = useRef(0);
+
+  const clearImages = () => {
+    setSelectedImages([]);
+  };
 
   const validateAndAddImages = (files: File[]) => {
     onError('');
 
-    if (selectedImages.length + files.length > maxImages) {
-      onError(`You can choose only ${maxImages} images`);
+    if (selectedImages.length + files.length > maxImagesCount) {
+      onError(`You can choose only ${maxImagesCount} images`);
       return;
     }
 
@@ -22,12 +33,17 @@ export const useImageValidation = (
       }
 
       if (file.size > maxFileSize) {
-        onError(`The file "${file.name}" is too big. The max allowed size is 15MB`);
+        onError(
+          `The file "${file.name}" is too big. The max allowed size is ${(maxFileSize / 1024 / 1024).toFixed(0)}MB`,
+        );
         return;
       }
     }
 
-    setSelectedImages((prev) => [...prev, ...files]);
+    setSelectedImages((prev) => [
+      ...prev,
+      ...files.map((file) => ({ file, id: fileIdCounter.current++ })),
+    ]);
   };
 
   const removeImage = (index: number) => {
@@ -37,7 +53,7 @@ export const useImageValidation = (
 
   return {
     selectedImages,
-    setSelectedImages,
+    clearImages,
     validateAndAddImages,
     removeImage,
   };

@@ -1,4 +1,6 @@
-import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { FC, KeyboardEvent } from 'react';
+
+import { useClickOutside } from '@/shared/ui/Selector/useClickOutside';
 
 type OptionValue = string | number;
 
@@ -23,26 +25,7 @@ export const SelectorWithValidation: FC<SelectorProps> = ({
   touched,
   hasError,
 }) => {
-  const [open, setOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        if (open) {
-          setOpen(false);
-          if (onBlur) {
-            onBlur(name);
-          }
-        }
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [open, onBlur, name]);
+  const { open, setOpen, containerRef } = useClickOutside(name, onBlur);
 
   const handleSelect = (val: OptionValue) => {
     onChange(name, val);

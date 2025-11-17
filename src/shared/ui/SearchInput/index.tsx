@@ -29,7 +29,7 @@ export const SearchInput: FC<SearchInputProps> = ({
   };
 
   return (
-    <div className="relative w-full max-w-md">
+    <div className="relative w-full">
       <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
         <SearchIcon width={20} height={20} color="#9CA3AF" />
       </div>

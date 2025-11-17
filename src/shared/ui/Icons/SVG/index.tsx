@@ -366,3 +366,32 @@ export const PictureIcon: FC<IconProps> = ({
     </svg>
   );
 };
+
+export const BurgerIcon: FC<IconProps> = ({
+  width = defaultWidth,
+  height = defaultHeight,
+  color = 'currentColor',
+}) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 32 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M30 11.5C30.8284 11.5 31.5 10.8284 31.5 10C31.5 9.17157 30.8284 8.5 30 8.5V11.5ZM0 10V11.5H30V10V8.5H0V10Z"
+        fill={color}
+      />
+      <path
+        d="M16.9091 3C17.7375 3 18.4091 2.32843 18.4091 1.5C18.4091 0.671573 17.7375 0 16.9091 0V3ZM0 1.5V3H16.9091V1.5V0H0V1.5Z"
+        fill={color}
+      />
+      <path
+        d="M30.0009 20C30.8293 20 31.5009 19.3284 31.5009 18.5C31.5009 17.6716 30.8293 17 30.0009 17V20ZM13.0918 18.5V20H30.0009V18.5V17H13.0918V18.5Z"
+        fill={color}
+      />
+    </svg>
+  );
+};

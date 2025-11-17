@@ -1,7 +1,5 @@
 import { StaticImageData } from 'next/image';
 
-import { Tweet } from '@/entities/Tweet/model/types';
-
 export interface User {
   id: number;
   firstName: string;
@@ -11,7 +9,7 @@ export interface User {
   email: string;
   avaUrl: string | StaticImageData;
   bannerUrl: string | StaticImageData;
-  tweets: Tweet[];
+  tweetsIds: number[];
   followingIds: number[];
   followerIds: number[];
 }

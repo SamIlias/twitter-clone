@@ -1,7 +1,7 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useCallback, useState } from 'react';
 
-import { AvaImage } from '@/entities/Tweet/ui/AvaImage';
 import { User } from '@/entities/User/model/types';
+import { AvaImage } from '@/entities/User/ui/AvaImage';
 import { Button, ButtonType } from '@/shared/ui/Buttons';
 import { ErrorMessage } from '@/shared/ui/ErrorMessage';
 import { ImagePreview } from '@/shared/ui/ImageSelector/ImagePreview';
@@ -9,7 +9,7 @@ import { ImageUploadButton } from '@/shared/ui/ImageSelector/ImageUploadButton';
 import { useImageValidation } from '@/shared/ui/ImageSelector/useImagesValidation';
 import { TextAreaCustom } from '@/shared/ui/TextAreaCustom';
 
-const MAX_IMAGES = 5;
+const MAX_IMAGES_COUNT = 5;
 const MAX_TEXT_LENGTH = 500;
 const MAX_FILE_SIZE = 15 * 1024 * 1024;
 
@@ -21,13 +21,20 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({ user }) => {
   const [newTweetValue, setNewTweetValue] = useState('');
   const [error, setError] = useState<string>('');
 
-  const { selectedImages, setSelectedImages, validateAndAddImages, removeImage } =
-    useImageValidation(MAX_IMAGES, MAX_FILE_SIZE, setError);
+  const onError = useCallback((e: string) => {
+    setError(e);
+  }, []);
+
+  const { selectedImages, clearImages, validateAndAddImages, removeImage } = useImageValidation(
+    MAX_IMAGES_COUNT,
+    MAX_FILE_SIZE,
+    onError,
+  );
 
   const handleTweetSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setNewTweetValue('');
-    setSelectedImages([]);
+    clearImages();
   };
 
   const handleImagesSelected = (files: File[]) => {
@@ -36,7 +43,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({ user }) => {
   };
 
   return (
-    <div className="flex gap-4 shadow-sm shadow-gray-500 p-6 ">
+    <div className="flex gap-4 shadow-sm shadow-gray-500/70 p-6 ">
       <AvaImage avaUrl={user.avaUrl} size={50} />
 
       <form onSubmit={handleTweetSubmit} className="flex flex-col w-full">
@@ -50,7 +57,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({ user }) => {
 
         <ErrorMessage message={error} />
 
-        <ImagePreview images={selectedImages} onRemove={removeImage} maxImages={MAX_IMAGES} />
+        <ImagePreview images={selectedImages} onRemove={removeImage} maxImages={MAX_IMAGES_COUNT} />
 
         <div className="flex justify-between items-center w-full">
           <ImageUploadButton onImagesSelected={handleImagesSelected} />
