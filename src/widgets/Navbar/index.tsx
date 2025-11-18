@@ -3,6 +3,7 @@
 import { FC } from 'react';
 
 import { AvaImage } from '@/entities/User/ui/AvaImage';
+import { UserCard } from '@/entities/User/ui/UserCard';
 import { UserNameBlock } from '@/entities/User/ui/UserNameBlock';
 import { ROUTES } from '@/shared/constants';
 import { users } from '@/shared/constants/exampleUserData';
@@ -50,7 +51,7 @@ export const Navbar: FC<{ isOpen: boolean; toggleNavAction: () => void }> = ({
   return (
     <>
       <div
-        className={`fixed inset-0 bg-black transition-opacity duration-300 md:hidden z-10 ${
+        className={`fixed inset-0 bg-black dark:bg-white transition-opacity duration-300 md:hidden z-10 ${
           isOpen ? 'opacity-90 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={toggleNavAction}
@@ -104,14 +105,7 @@ export const Navbar: FC<{ isOpen: boolean; toggleNavAction: () => void }> = ({
           </div>
 
           <div className="border-t border-gray-200 pt-4">
-            <div className="flex items-center gap-3 mb-4 px-2">
-              <AvaImage avaUrl={user.avaUrl} size={40} />
-              <UserNameBlock
-                firstName={user.firstName}
-                secondName={user.secondName}
-                telegramLink={user.telegramLink}
-              />
-            </div>
+            <UserCard user={user} />
             <Button variant={ButtonType.SECONDARY} onClick={handleLogout}>
               Log out
             </Button>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { Navbar } from '@/widgets/Navbar';
+import { SearchBar } from '@/widgets/SearchBar';
 
 import { MainContent } from './MainContent';
 
@@ -29,7 +30,7 @@ export function ProfilePage() {
     <div className="w-full min-h-screen grid md:grid-cols-[1fr_50%_1fr] overflow-y-auto">
       <Navbar isOpen={isNavOpen} toggleNavAction={toggleNav} />
       <MainContent handleBurgerClick={toggleNav} />
-      <div className="h-full hidden md:block">searchbar</div>
+      <SearchBar />
     </div>
   );
 }
