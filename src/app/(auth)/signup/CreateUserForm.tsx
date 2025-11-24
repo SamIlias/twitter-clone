@@ -1,23 +1,39 @@
 'use client';
 
 import { useFormik } from 'formik';
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ChangeEvent, useMemo, useState } from 'react';
 
+import { register } from '@/api/register';
+import { createPayloadFromValues } from '@/app/(auth)/signup/lib/formHandlers';
 import { validationSchema } from '@/app/(auth)/signup/lib/validationSchema';
 import { ROUTES } from '@/shared/constants';
 import { days, isValidMonth, months, years } from '@/shared/lib/date';
 import { maskPhone } from '@/shared/lib/phoneMask';
+import { Button, ButtonType } from '@/shared/ui/Buttons';
 import { CustomLink } from '@/shared/ui/CustomLink';
+import { ErrorMessage } from '@/shared/ui/ErrorMessage';
 import InputFieldWithValidation from '@/shared/ui/InputField';
 import { PasswordEyeButton } from '@/shared/ui/PasswordEyeButton';
 import { SelectorWithValidation } from '@/shared/ui/Selector';
 
-import { Button, ButtonType } from '../../../shared/ui/Buttons';
+export type FormValues = {
+  name: string;
+  phone: string;
+  email: string;
+  password: string;
+  day: string;
+  month: string;
+  year: string;
+};
 
 export default function CreateUserForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -33,23 +49,28 @@ export default function CreateUserForm() {
     validationSchema,
     onSubmit: async (values) => {
       setIsSubmitting(true);
-      await new Promise((res) => setTimeout(res, 1000));
-      console.log('Registered:', values);
+      const payload = await createPayloadFromValues(values);
+      const data = await register(payload, setError);
       setIsSubmitting(false);
+
+      if (data) {
+        //todo change route to HOME
+        router.push(ROUTES.PROFILE);
+      }
     },
   });
 
   const { values, setFieldValue } = formik;
 
   useMemo(() => {
-    const currentDay = +values.day;
+    const currentDay = Number(values.day);
     const currentMonth = values.month;
-    const currentYear = values.year;
+    const currentYear = Number(values.year);
 
     if (!currentMonth || !isValidMonth(currentMonth)) return;
 
     const maxDay = new Date(
-      currentYear ? +currentYear : new Date().getFullYear(),
+      currentYear ? currentYear : new Date().getFullYear(),
       months[currentMonth] + 1,
       0,
     ).getDate();
@@ -70,6 +91,7 @@ export default function CreateUserForm() {
 
   return (
     <form onSubmit={formik.handleSubmit} className="w-full flex flex-col space-y-3" noValidate>
+      <ErrorMessage message={error} />
       <InputFieldWithValidation
         name="name"
         placeholder="Full name"
@@ -153,7 +175,7 @@ export default function CreateUserForm() {
 
         <SelectorWithValidation
           name={'day'}
-          options={days(formik.values.month, formik.values.year)}
+          options={days(formik.values.month, formik.values.year).map(String)}
           value={formik.values.day}
           onChange={formik.setFieldValue}
           onBlur={() => formik.setFieldTouched('day', true)}
@@ -164,7 +186,7 @@ export default function CreateUserForm() {
 
         <SelectorWithValidation
           name={'year'}
-          options={years}
+          options={years.map(String)}
           value={formik.values.year}
           onChange={formik.setFieldValue}
           onBlur={() => formik.setFieldTouched('year', true)}

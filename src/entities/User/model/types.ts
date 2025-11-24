@@ -1,5 +1,3 @@
-import { StaticImageData } from 'next/image';
-
 export interface User {
   id: number;
   firstName: string;
@@ -7,9 +5,26 @@ export interface User {
   telegramLink: string;
   status: string;
   email: string;
-  avaUrl: string | StaticImageData;
-  bannerUrl: string | StaticImageData;
+  avaUrl: string;
+  bannerUrl: string;
+
+  phone?: string | null;
+  birthDate?: string | null;
+
   tweetsIds: number[];
   followingIds: number[];
   followerIds: number[];
 }
+
+export type RegisterPayload = {
+  firstName: string;
+  secondName: string;
+  phone: string;
+  email: string;
+  password: string;
+  birthDate: string | null;
+  telegramLink: string;
+  status: string;
+  avaUrl: string;
+  bannerUrl: string;
+};

@@ -27,3 +27,18 @@ export function days(month: string, year: string) {
 
   return Array.from({ length: daysInMonth }, (_, i) => i + 1);
 }
+
+export function buildISOBirthDate(values: {
+  year: string;
+  month: keyof typeof months;
+  day: string;
+}): string | null {
+  if (!values.year || !values.month || !values.day) {
+    return null;
+  }
+
+  const month = String(months[values.month] + 1).padStart(2, '0');
+  const day = values.day.padStart(2, '0');
+
+  return `${values.year}-${month}-${day}`;
+}

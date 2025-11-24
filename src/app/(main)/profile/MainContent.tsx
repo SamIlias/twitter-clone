@@ -3,18 +3,20 @@
 import { FC, useState } from 'react';
 
 import { ProfileContentHeader } from '@/app/(main)/profile/ProfileContentHeader';
+import { Tweet } from '@/entities/Tweet/model/types';
 import { AddTweetForm } from '@/entities/Tweet/ui/AddTweetForm';
 import { TweetComponent } from '@/entities/Tweet/ui/Tweet';
+import { User } from '@/entities/User/model/types';
 import { UserProfileInfo } from '@/entities/User/ui';
-import { tweets, users } from '@/shared/constants/exampleUserData';
 
 interface ContentProps {
   handleBurgerClick: () => void;
+  user: User;
+  tweets: Tweet[];
 }
 
-export const MainContent: FC<ContentProps> = ({ handleBurgerClick }) => {
+export const MainContent: FC<ContentProps> = ({ handleBurgerClick, user, tweets }) => {
   const [isEditing, setEditing] = useState(false);
-  const user = users[0];
   const userTweets = tweets.filter((t) => t.userId === user.id);
 
   const handleEditClick = () => {

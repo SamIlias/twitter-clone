@@ -17,3 +17,12 @@ export function isAdult(day: string, month: string, year: string): boolean {
     (today < new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate()) ? 1 : 0);
   return age >= 16;
 }
+
+export function splitFullName(fullName: string): { firstName: string; secondName: string } {
+  if (!fullName) return { firstName: '', secondName: '' };
+
+  const parts = fullName.trim().split(/\s+/);
+  const firstName = parts[0] ?? '';
+  const secondName = parts.slice(1).join(' ') ?? ''; // все оставшиеся части в secondName
+  return { firstName, secondName };
+}

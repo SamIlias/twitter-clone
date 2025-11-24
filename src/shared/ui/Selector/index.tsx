@@ -2,13 +2,11 @@ import { FC, KeyboardEvent } from 'react';
 
 import { useClickOutside } from '@/shared/ui/Selector/useClickOutside';
 
-type OptionValue = string | number;
-
 interface SelectorProps {
   name: string;
-  options: OptionValue[];
-  value: OptionValue | '';
-  onChange: (field: string, value: OptionValue) => void;
+  options: string[];
+  value: string;
+  onChange: (field: string, value: string) => void;
   onBlur?: (field: string) => void;
   placeholder?: string;
   touched?: boolean;
@@ -27,7 +25,7 @@ export const SelectorWithValidation: FC<SelectorProps> = ({
 }) => {
   const { open, setOpen, containerRef } = useClickOutside(name, onBlur);
 
-  const handleSelect = (val: OptionValue) => {
+  const handleSelect = (val: string) => {
     onChange(name, val);
     setOpen(false);
     if (onBlur) {
@@ -72,7 +70,7 @@ export const SelectorWithValidation: FC<SelectorProps> = ({
         >
           {options.map((opt) => (
             <li
-              key={String(opt)}
+              key={opt}
               onClick={() => handleSelect(opt)}
               data-testid="select-option"
               role="option"
