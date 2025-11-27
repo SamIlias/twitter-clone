@@ -12,7 +12,7 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   touched?: boolean;
   hasError?: boolean;
   errorMessage?: string;
-  classNameAdd?: string;
+  className?: string;
 }
 
 const InputFieldWithValidation: FC<InputFieldProps> = ({
@@ -25,7 +25,7 @@ const InputFieldWithValidation: FC<InputFieldProps> = ({
   touched,
   hasError,
   errorMessage,
-  classNameAdd = '',
+  className = '',
   ...props
 }) => {
   return (
@@ -39,9 +39,9 @@ const InputFieldWithValidation: FC<InputFieldProps> = ({
         onChange={onChange}
         onBlur={onBlur}
         className={cn(
-          'border rounded-lg p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500',
+          'border rounded-lg p-2 bg-[var(--color-background)] focus:outline-none focus:ring-2 focus:ring-blue-500',
           touched && hasError ? 'border-red-500' : 'border-gray-300 dark:border-gray-700',
-          classNameAdd,
+          className,
         )}
       />
       {touched && hasError && errorMessage && (

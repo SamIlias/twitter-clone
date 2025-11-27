@@ -9,7 +9,7 @@ interface ImagePreviewProps {
   maxImages: number;
 }
 
-export const ImagePreview: FC<ImagePreviewProps> = ({ images, onRemove, maxImages }) => {
+export const ImagesPreview: FC<ImagePreviewProps> = ({ images, onRemove, maxImages }) => {
   if (images.length === 0) return null;
 
   return (
@@ -17,7 +17,6 @@ export const ImagePreview: FC<ImagePreviewProps> = ({ images, onRemove, maxImage
       <div className={`grid grid-cols-2 md:grid-cols-5 gap-2`}>
         {images.map((image, index) => {
           const handleRemove = () => onRemove(index);
-          console.log(image.id);
 
           return (
             <div key={image.id} className="h-[60px] relative">

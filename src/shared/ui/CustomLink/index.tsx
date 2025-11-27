@@ -1,17 +1,19 @@
 import Link from 'next/link';
 import { FC } from 'react';
 
+import { cn } from '@/shared/lib/utils';
+
 interface CustomLinkProps {
   href: string;
   name: string;
-  additionalClassName?: string;
+  className?: string;
 }
 
-export const CustomLink: FC<CustomLinkProps> = ({ href, name, additionalClassName }) => {
+export const CustomLink: FC<CustomLinkProps> = ({ href, name, className = '' }) => {
   return (
     <Link
       href={href}
-      className={`text-[color:var(--color-text-link)] hover:underline${additionalClassName ? ` ${additionalClassName}` : ''}`}
+      className={cn(`text-[color:var(--color-text-link)] hover:underline`, className)}
     >
       {name}
     </Link>

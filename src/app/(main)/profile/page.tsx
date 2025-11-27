@@ -69,7 +69,7 @@ export default function ProfilePage() {
 
   return (
     <div className="w-full min-h-screen grid md:grid-cols-[1fr_50%_1fr] overflow-y-auto">
-      <Navbar isOpen={isNavOpen} toggleNavAction={toggleNav} />
+      <Navbar isOpen={isNavOpen} toggleNavAction={toggleNav} user={user} />
       <MainContent handleBurgerClick={toggleNav} user={user} tweets={userTweets} />
       <SearchBar users={recommendedUsers} tweets={recommendedTweets} />
     </div>

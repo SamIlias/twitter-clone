@@ -1,13 +1,14 @@
 'use client';
 
-import { FC } from 'react';
+import { useRouter } from 'next/navigation';
+import { FC, useState } from 'react';
 
-import { AvaImage } from '@/entities/User/ui/AvaImage';
+import { logout } from '@/api/logout';
+import { User } from '@/entities/User/model/types';
 import { UserCard } from '@/entities/User/ui/UserCard';
-import { UserNameBlock } from '@/entities/User/ui/UserNameBlock';
 import { ROUTES } from '@/shared/constants';
-import { users } from '@/shared/constants/exampleUserData';
 import { Button, ButtonType } from '@/shared/ui/Buttons';
+import { ErrorMessage } from '@/shared/ui/ErrorMessage';
 import {
   BellIcon,
   BookmarksIcon,
@@ -34,18 +35,28 @@ const links = {
   MORE: { i: MoreIcon, t: 'More' },
 };
 
-export const Navbar: FC<{ isOpen: boolean; toggleNavAction: () => void }> = ({
-  isOpen,
-  toggleNavAction,
-}) => {
-  const user = users[0];
+interface NavbarProps {
+  isOpen: boolean;
+  toggleNavAction: () => void;
+  user: User;
+}
+
+export const Navbar: FC<NavbarProps> = ({ isOpen, toggleNavAction, user }) => {
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleClick = () => {
     console.log('New tweet');
   };
 
-  const handleLogout = () => {
-    console.log('Logout');
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.replace(ROUTES.LOGIN);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+      setError(errorMessage);
+    }
   };
 
   return (
@@ -71,7 +82,7 @@ export const Navbar: FC<{ isOpen: boolean; toggleNavAction: () => void }> = ({
         </button>
 
         <div className="h-full flex flex-col px-4 py-3">
-          <div className="mb-6 md:block">
+          <div className="my-6 md:block">
             <TwitterLogo />
           </div>
 
@@ -110,6 +121,7 @@ export const Navbar: FC<{ isOpen: boolean; toggleNavAction: () => void }> = ({
               Log out
             </Button>
           </div>
+          <ErrorMessage message={error} />
         </div>
       </nav>
     </>

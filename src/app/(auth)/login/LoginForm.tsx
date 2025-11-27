@@ -26,16 +26,16 @@ export default function LoginForm() {
     onSubmit: async (values) => {
       setIsSubmitting(true);
       try {
-        const data = await loginUser(values);
-        if (data && data.message === 'ok') {
+        const { message } = await loginUser(values);
+        if (message === 'ok') {
           router.push(ROUTES.PROFILE);
+        } else {
+          setError('Login failed');
         }
       } catch (error: unknown) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError('An unexpected error occurred');
-        }
+        const errorMessage =
+          error instanceof Error ? error.message : 'An unexpected error occurred';
+        setError(errorMessage);
       } finally {
         setIsSubmitting(false);
       }

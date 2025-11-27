@@ -2,12 +2,14 @@
 
 import { FC, useState } from 'react';
 
+import { EditUserForm } from '@/app/(main)/profile/EditUserForm';
 import { ProfileContentHeader } from '@/app/(main)/profile/ProfileContentHeader';
 import { Tweet } from '@/entities/Tweet/model/types';
 import { AddTweetForm } from '@/entities/Tweet/ui/AddTweetForm';
 import { TweetComponent } from '@/entities/Tweet/ui/Tweet';
 import { User } from '@/entities/User/model/types';
 import { UserProfileInfo } from '@/entities/User/ui';
+import { EditModal } from '@/shared/ui/EditModal';
 
 interface ContentProps {
   handleBurgerClick: () => void;
@@ -16,15 +18,24 @@ interface ContentProps {
 }
 
 export const MainContent: FC<ContentProps> = ({ handleBurgerClick, user, tweets }) => {
-  const [isEditing, setEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const userTweets = tweets.filter((t) => t.userId === user.id);
 
   const handleEditClick = () => {
-    setEditing(true);
+    setIsEditing(true);
+  };
+
+  const handleEditClose = () => {
+    setIsEditing(false);
   };
 
   return (
     <div className="h-full border-2 border-[var(--color-content-border)]">
+      {isEditing && (
+        <EditModal onClose={handleEditClose}>
+          <EditUserForm user={user} closeModal={handleEditClose} />
+        </EditModal>
+      )}
       <ProfileContentHeader user={user} handleBurgerClick={handleBurgerClick} />
       <UserProfileInfo user={user} handleEditClick={handleEditClick} />
       <div className="flex flex-col gap-6 ">

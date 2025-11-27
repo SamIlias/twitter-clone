@@ -1,3 +1,5 @@
+import { GENDER } from '@/shared/constants';
+
 export interface User {
   id: number;
   firstName: string;
@@ -9,6 +11,7 @@ export interface User {
   bannerUrl: string;
 
   phone?: string | null;
+  gender?: GENDER;
   birthDate?: string | null;
 
   tweetsIds: number[];
@@ -27,4 +30,22 @@ export type RegisterPayload = {
   status: string;
   avaUrl: string;
   bannerUrl: string;
+};
+
+export type UpdateUserPayload = {
+  firstName?: string;
+  secondName?: string;
+  telegramLink?: string;
+  phone?: string;
+  email?: string;
+  status?: string;
+  avaUrl?: string;
+  bannerUrl?: string;
+  password?: string;
+  birthDate?: Date;
+};
+
+export type UpdatePasswordPayload = {
+  oldPassword: string;
+  newPassword: string;
 };

@@ -4,7 +4,7 @@ import { User } from '@/entities/User/model/types';
 import { AvaImage } from '@/entities/User/ui/AvaImage';
 import { Button, ButtonType } from '@/shared/ui/Buttons';
 import { ErrorMessage } from '@/shared/ui/ErrorMessage';
-import { ImagePreview } from '@/shared/ui/ImageSelector/ImagePreview';
+import { ImagesPreview } from '@/shared/ui/ImageSelector/ImagesPreview';
 import { ImageUploadButton } from '@/shared/ui/ImageSelector/ImageUploadButton';
 import { useImageValidation } from '@/shared/ui/ImageSelector/useImagesValidation';
 import { TextAreaCustom } from '@/shared/ui/TextAreaCustom';
@@ -21,9 +21,9 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({ user }) => {
   const [newTweetValue, setNewTweetValue] = useState('');
   const [error, setError] = useState<string>('');
 
-  const onError = useCallback((e: string) => {
+  const onError = (e: string) => {
     setError(e);
-  }, []);
+  };
 
   const { selectedImages, clearImages, validateAndAddImages, removeImage } = useImageValidation(
     MAX_IMAGES_COUNT,
@@ -57,7 +57,11 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({ user }) => {
 
         <ErrorMessage message={error} />
 
-        <ImagePreview images={selectedImages} onRemove={removeImage} maxImages={MAX_IMAGES_COUNT} />
+        <ImagesPreview
+          images={selectedImages}
+          onRemove={removeImage}
+          maxImages={MAX_IMAGES_COUNT}
+        />
 
         <div className="flex justify-between items-center w-full">
           <ImageUploadButton onImagesSelected={handleImagesSelected} />

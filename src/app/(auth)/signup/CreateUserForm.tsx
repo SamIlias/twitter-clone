@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useMemo, useState } from 'react';
 
+import { loginUser } from '@/api/login';
 import { register } from '@/api/register';
 import { createPayloadFromValues } from '@/app/(auth)/signup/lib/formHandlers';
 import { validationSchema } from '@/app/(auth)/signup/lib/validationSchema';
@@ -49,13 +50,24 @@ export default function CreateUserForm() {
     validationSchema,
     onSubmit: async (values) => {
       setIsSubmitting(true);
-      const payload = await createPayloadFromValues(values);
-      const data = await register(payload, setError);
-      setIsSubmitting(false);
+      setError(null);
 
-      if (data) {
-        //todo change route to HOME
-        router.push(ROUTES.PROFILE);
+      try {
+        const payload = await createPayloadFromValues(values);
+        await register(payload);
+
+        const loginResponse = await loginUser(values);
+        if (loginResponse?.message === 'ok') {
+          router.push(ROUTES.PROFILE);
+          return;
+        }
+
+        setError('Unexpected login response');
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'An unexpected error occurred';
+        setError(message);
+      } finally {
+        setIsSubmitting(false);
       }
     },
   });
@@ -156,7 +168,7 @@ export default function CreateUserForm() {
       </div>
 
       <div className="flex">
-        <CustomLink href={ROUTES.LOGIN} name={'Use Google'} />
+        <CustomLink href={ROUTES.ROOT} name={'Use Google'} />
       </div>
 
       <p className="text text-bold">Date of birth</p>

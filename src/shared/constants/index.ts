@@ -1,4 +1,5 @@
 export const ROUTES = {
+  ROOT: '/',
   LOGIN: '/login',
   SIGN_UP: '/signup',
   PROFILE: '/profile',
@@ -12,3 +13,8 @@ export const ROUTES = {
 };
 
 export const API_BASE_URL = 'http://localhost:3001';
+
+export enum GENDER {
+  MALE = 'male',
+  FEMALE = 'female',
+}

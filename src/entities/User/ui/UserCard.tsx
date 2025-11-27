@@ -10,6 +10,7 @@ interface UserCardProps {
 }
 
 export const UserCard: FC<UserCardProps> = ({ user, className = '' }) => {
+  if (!user) return null;
   const { avaUrl, firstName, secondName, telegramLink } = user;
 
   return (

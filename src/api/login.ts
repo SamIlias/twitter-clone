@@ -1,4 +1,3 @@
-// client-side function
 import { API_BASE_URL } from '@/shared/constants';
 
 export interface LoginValues {
@@ -10,7 +9,7 @@ export interface LoginResponse {
   message: string;
 }
 
-export async function loginUser(values: LoginValues): Promise<LoginResponse | null> {
+export async function loginUser(values: LoginValues): Promise<LoginResponse> {
   const res = await fetch(`${API_BASE_URL}/auth/login`, {
     method: 'POST',
     credentials: 'include',

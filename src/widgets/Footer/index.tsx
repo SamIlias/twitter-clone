@@ -23,7 +23,7 @@ export function Footer() {
   return (
     <div className="flex justify-center flex-wrap text-xs py-5">
       {FOOTER_LINKS.map(({ name, href }) => (
-        <CustomLink key={name} href={href} name={name} additionalClassName={'mx-2'} />
+        <CustomLink key={name} href={href} name={name} className={'mx-2'} />
       ))}
     </div>
   );
