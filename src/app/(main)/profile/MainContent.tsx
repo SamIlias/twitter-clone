@@ -3,6 +3,7 @@
 import { FC, useState } from 'react';
 
 import { EditUserForm } from '@/app/(main)/profile/EditUserForm';
+import { EditPasswordForm } from '@/app/(main)/profile/EditUserForm/EditPasswordForm';
 import { ProfileContentHeader } from '@/app/(main)/profile/ProfileContentHeader';
 import { Tweet } from '@/entities/Tweet/model/types';
 import { AddTweetForm } from '@/entities/Tweet/ui/AddTweetForm';
@@ -14,11 +15,14 @@ import { EditModal } from '@/shared/ui/EditModal';
 interface ContentProps {
   handleBurgerClick: () => void;
   user: User;
+  setUser: (user: User) => void;
   tweets: Tweet[];
 }
 
-export const MainContent: FC<ContentProps> = ({ handleBurgerClick, user, tweets }) => {
+export const MainContent: FC<ContentProps> = ({ handleBurgerClick, user, setUser, tweets }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isOpenPasswordModal, setIsOpenPasswordModal] = useState<boolean>(false);
+
   const userTweets = tweets.filter((t) => t.userId === user.id);
 
   const handleEditClick = () => {
@@ -29,13 +33,33 @@ export const MainContent: FC<ContentProps> = ({ handleBurgerClick, user, tweets 
     setIsEditing(false);
   };
 
+  const handleEditPasswordClick = () => {
+    setIsOpenPasswordModal(true);
+  };
+
+  const handleEditPasswordClose = () => {
+    setIsOpenPasswordModal(false);
+  };
+
   return (
     <div className="h-full border-2 border-[var(--color-content-border)]">
       {isEditing && (
         <EditModal onClose={handleEditClose}>
-          <EditUserForm user={user} closeModal={handleEditClose} />
+          <EditUserForm
+            user={user}
+            setUser={setUser}
+            closeModal={handleEditClose}
+            handleEditPasswordClick={handleEditPasswordClick}
+          />
         </EditModal>
       )}
+
+      {isOpenPasswordModal && (
+        <EditModal onClose={handleEditPasswordClose}>
+          <EditPasswordForm closeModal={handleEditPasswordClose} />
+        </EditModal>
+      )}
+
       <ProfileContentHeader user={user} handleBurgerClick={handleBurgerClick} />
       <UserProfileInfo user={user} handleEditClick={handleEditClick} />
       <div className="flex flex-col gap-6 ">

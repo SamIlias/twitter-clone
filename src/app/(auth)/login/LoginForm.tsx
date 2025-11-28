@@ -26,6 +26,7 @@ export default function LoginForm() {
     onSubmit: async (values) => {
       setIsSubmitting(true);
       try {
+        values.email = values.email.toLowerCase();
         const { message } = await loginUser(values);
         if (message === 'ok') {
           router.push(ROUTES.PROFILE);

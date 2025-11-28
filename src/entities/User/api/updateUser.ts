@@ -1,7 +1,7 @@
-import { UpdateUserPayload } from '@/entities/User/model/types';
+import { User } from '@/entities/User/model/types';
 import { API_BASE_URL } from '@/shared/constants';
 
-export async function updateUser(payload: UpdateUserPayload): Promise<UpdateUserPayload | null> {
+export async function updateUser(payload: User): Promise<User | null> {
   const response = await fetch(`${API_BASE_URL}/users/me`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },

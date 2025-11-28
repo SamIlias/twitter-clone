@@ -3,14 +3,12 @@
 import { useFormik } from 'formik';
 import { FC, useCallback, useState } from 'react';
 
-import { EditPasswordForm } from '@/app/(main)/profile/EditUserForm/EditPasswordForm';
 import { createPayloadFromValues } from '@/app/(main)/profile/EditUserForm/lib/editFormHandlers';
 import { editUserValidationSchema } from '@/app/(main)/profile/EditUserForm/lib/editUserValidationSchema';
 import { updateUser } from '@/entities/User/api/updateUser';
 import { User } from '@/entities/User/model/types';
 import { GENDER } from '@/shared/constants';
 import { Button, ButtonType } from '@/shared/ui/Buttons';
-import { EditModal } from '@/shared/ui/EditModal';
 import { ErrorMessage } from '@/shared/ui/ErrorMessage';
 import { SelectSingleImage } from '@/shared/ui/ImageSelector/SelectSingleImageBlock/SelectSingleImage';
 import InputFieldWithValidation from '@/shared/ui/InputField';
@@ -33,23 +31,21 @@ export type EditFormValues = {
 
 interface EditFormProps {
   user: User;
+  setUser: (user: User) => void;
   closeModal: () => void;
+  handleEditPasswordClick: () => void;
 }
 
-export const EditUserForm: FC<EditFormProps> = ({ user, closeModal }) => {
+export const EditUserForm: FC<EditFormProps> = ({
+  user,
+  setUser,
+  closeModal,
+  handleEditPasswordClick,
+}) => {
   const [error, setError] = useState<string | null>(null);
-  const [isOpenPasswordModal, setIsOpenPasswordModal] = useState<boolean>(false);
 
   const onError = (e: string) => {
     setError(e);
-  };
-
-  const handleEditPasswordClick = () => {
-    setIsOpenPasswordModal(true);
-  };
-
-  const handleEditPasswordClose = () => {
-    setIsOpenPasswordModal(false);
   };
 
   const formik = useFormik<EditFormValues>({
@@ -69,7 +65,10 @@ export const EditUserForm: FC<EditFormProps> = ({ user, closeModal }) => {
 
       try {
         const payload = await createPayloadFromValues(values);
-        await updateUser(payload);
+        const updatedUser = await updateUser(payload);
+        if (updatedUser) {
+          setUser(updatedUser);
+        }
         closeModal();
       } catch (err) {
         const message = err instanceof Error ? err.message : 'An unexpected error occurred';
@@ -90,11 +89,6 @@ export const EditUserForm: FC<EditFormProps> = ({ user, closeModal }) => {
 
   return (
     <form onSubmit={formik.handleSubmit} className="w-full flex flex-col space-y-4" noValidate>
-      {isOpenPasswordModal && (
-        <EditModal onClose={handleEditPasswordClose}>
-          <EditPasswordForm closeModal={handleEditPasswordClose} />
-        </EditModal>
-      )}
       <ErrorMessage message={error} />
 
       <p className="text-3xl font-bold">Change info</p>

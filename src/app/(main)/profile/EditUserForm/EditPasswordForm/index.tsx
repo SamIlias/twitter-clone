@@ -3,8 +3,7 @@ import { FC, useState } from 'react';
 
 import { changePasswordValidationSchema } from '@/app/(main)/profile/EditUserForm/EditPasswordForm/lib/changePasswordValidationSchema';
 import { updatePassword } from '@/entities/User/api/updatePassword';
-import { updateUser } from '@/entities/User/api/updateUser';
-import { UpdatePasswordPayload, User } from '@/entities/User/model/types';
+import { UpdatePasswordPayload } from '@/entities/User/model/types';
 import { Button, ButtonType } from '@/shared/ui/Buttons';
 import { ErrorMessage } from '@/shared/ui/ErrorMessage';
 import InputFieldWithValidation from '@/shared/ui/InputField';
@@ -35,6 +34,7 @@ export const EditPasswordForm: FC<EditFormProps> = ({ closeModal }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const formik = useFormik<EditFormValues>({
     initialValues: {
@@ -51,7 +51,8 @@ export const EditPasswordForm: FC<EditFormProps> = ({ closeModal }) => {
       try {
         const payload = createPayloadFromValues(values);
         await updatePassword(payload);
-        closeModal();
+        setIsSuccess(true);
+        setTimeout(closeModal, 3000);
       } catch (err) {
         const message = err instanceof Error ? err.message : 'An unexpected error occurred';
         setError(message);
@@ -62,6 +63,13 @@ export const EditPasswordForm: FC<EditFormProps> = ({ closeModal }) => {
   const toggleShowPassword = () => setShowPassword((p) => !p);
   const toggleShowNewPassword = () => setShowNewPassword((p) => !p);
   const toggleShowConfirm = () => setShowConfirm((p) => !p);
+
+  if (isSuccess)
+    return (
+      <div className="text-green-500 text-xl flex justify-center">
+        Password updated successfully
+      </div>
+    );
 
   return (
     <form onSubmit={formik.handleSubmit} className="w-full flex flex-col space-y-4" noValidate>

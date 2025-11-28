@@ -18,7 +18,7 @@ export async function createPayloadFromValues(values: FormValues): Promise<Regis
     firstName,
     secondName,
     phone,
-    email,
+    email: email.toLowerCase(),
     password,
     birthDate,
     telegramLink: '',
