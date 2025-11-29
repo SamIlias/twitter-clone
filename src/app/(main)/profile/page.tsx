@@ -14,11 +14,13 @@ import { TweetList } from '@/entities/Tweet/ui/TweetList';
 import { UserProfileInfo } from '@/entities/User/ui';
 import { SimpleButton } from '@/shared/ui/Buttons/SimpleButton';
 import { EditModal } from '@/shared/ui/EditModal';
+import { CustomErrorMessage } from '@/shared/ui/ErrorMessage';
 
 export default function MyProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [isOpenPasswordModal, setIsOpenPasswordModal] = useState<boolean>(false);
   const [tweets, setTweets] = useState<Tweet[]>([]);
+  const [error, setError] = useState<unknown>(null);
 
   const { user, setUser } = useUser();
   const { toggleNav } = useNav();
@@ -29,12 +31,16 @@ export default function MyProfilePage() {
         const tweets = await getTweetsByUserId(user!.id);
         setTweets(tweets);
       } catch (error) {
-        console.error(error);
+        setError(error);
       }
     };
 
     if (user) loadTweets();
   }, [user]);
+
+  const handleSettingCreatedTweet = (newTweet: Tweet) => {
+    setTweets((prevState) => [newTweet, ...prevState]);
+  };
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -55,6 +61,7 @@ export default function MyProfilePage() {
   if (user)
     return (
       <div className="h-full border-2 border-[var(--color-content-border)]">
+        <CustomErrorMessage error={error} />
         {isEditing && user && (
           <EditModal onClose={handleEditClose}>
             <EditUserForm
@@ -85,7 +92,7 @@ export default function MyProfilePage() {
             className="text-sm h-[35px] py-2 hidden md:block"
           />
         </UserProfileInfo>
-        <AddTweetForm user={user} />
+        <AddTweetForm user={user} setTweets={handleSettingCreatedTweet} />
         <TweetList tweets={tweets} user={user} />
       </div>
     );
