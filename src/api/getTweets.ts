@@ -13,3 +13,16 @@ export async function getTweets(): Promise<Tweet[]> {
 
   return response.json();
 }
+
+export async function getTweetsByUserId(userId: number): Promise<Tweet[]> {
+  const response = await fetch(`${API_BASE_URL}/tweets/user/${userId}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to load tweets');
+  }
+
+  return response.json();
+}

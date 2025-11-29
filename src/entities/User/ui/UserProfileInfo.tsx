@@ -1,19 +1,18 @@
 import Image from 'next/image';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 
 import { User } from '@/entities/User/model/types';
 import { AvaImage } from '@/entities/User/ui/AvaImage';
 import { UserFollowsStat } from '@/entities/User/ui/UserFollowsStat';
 import { UserNameBlock } from '@/entities/User/ui/UserNameBlock';
 import defaultBanner from '@/shared/assets/exampleUser/userBanner.png';
-import { SimpleButton } from '@/shared/ui/Buttons/SimpleButton';
 
 interface UserProfileProps {
   user: User;
-  handleEditClick: () => void;
+  children?: ReactNode;
 }
 
-export const UserProfileInfo: FC<UserProfileProps> = ({ user, handleEditClick }) => {
+export const UserProfileInfo: FC<UserProfileProps> = ({ user, children }) => {
   return (
     <div className="shadow-gray-500/50 shadow-sm">
       <div className="h-[320px] grid grid-rows-[78%_1fr] relative">
@@ -26,13 +25,7 @@ export const UserProfileInfo: FC<UserProfileProps> = ({ user, handleEditClick })
           />
         </div>
 
-        <div className="w-[110px] self-center justify-self-end mr-6">
-          <SimpleButton
-            handleClickAction={handleEditClick}
-            title={'Edit profile'}
-            className="text-sm h-[35px] py-2 hidden md:block"
-          />
-        </div>
+        <div className="w-[110px] self-center justify-self-end mr-6">{children}</div>
 
         <AvaImage avaUrl={user.avaUrl} size={180} className="absolute bottom-0 left-3" />
       </div>

@@ -1,82 +1,92 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { getMe } from '@/api/getMe';
-import { getTweets } from '@/api/getTweets';
-import { getUsers } from '@/api/getUsers';
+import { getTweetsByUserId } from '@/api/getTweets';
+import { useNav } from '@/app/(main)/context/NavContext';
+import { useUser } from '@/app/(main)/context/UserContext';
+import { EditUserForm } from '@/app/(main)/profile/EditUserForm';
+import { EditPasswordForm } from '@/app/(main)/profile/EditUserForm/EditPasswordForm';
+import { ProfileContentHeader } from '@/app/(main)/profile/ProfileContentHeader';
 import { Tweet } from '@/entities/Tweet/model/types';
-import { User } from '@/entities/User/model/types';
-import { ROUTES } from '@/shared/constants';
-import { Navbar } from '@/widgets/Navbar';
-import { SearchBar } from '@/widgets/SearchBar';
+import { AddTweetForm } from '@/entities/Tweet/ui/AddTweetForm';
+import { TweetList } from '@/entities/Tweet/ui/TweetList';
+import { UserProfileInfo } from '@/entities/User/ui';
+import { SimpleButton } from '@/shared/ui/Buttons/SimpleButton';
+import { EditModal } from '@/shared/ui/EditModal';
 
-import { MainContent } from './MainContent';
-
-export default function ProfilePage() {
-  const [isNavOpen, setNavOpen] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
-  const [users, setUsers] = useState<User[]>([]);
+export default function MyProfilePage() {
+  const [isEditing, setIsEditing] = useState(false);
+  const [isOpenPasswordModal, setIsOpenPasswordModal] = useState<boolean>(false);
   const [tweets, setTweets] = useState<Tweet[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  const router = useRouter();
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 1024px)');
-
-    const handler = () => setNavOpen(mediaQuery.matches);
-
-    handler();
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
-  }, []);
+  const { user, setUser } = useUser();
+  const { toggleNav } = useNav();
 
   useEffect(() => {
-    async function loadData() {
-      const me = await getMe();
-
-      if (!me) {
-        router.push(ROUTES.LOGIN);
-        return;
+    const loadTweets = async () => {
+      try {
+        const tweets = await getTweetsByUserId(user!.id);
+        setTweets(tweets);
+      } catch (error) {
+        console.error(error);
       }
+    };
 
-      setUser(me);
+    if (user) loadTweets();
+  }, [user]);
 
-      const [fetchedUsers, fetchedTweets] = await Promise.all([getUsers(), getTweets()]);
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
 
-      setUsers(fetchedUsers);
-      setTweets(fetchedTweets);
+  const handleEditClose = () => {
+    setIsEditing(false);
+  };
 
-      setLoading(false);
-    }
+  const handleEditPasswordClick = () => {
+    setIsOpenPasswordModal(true);
+  };
 
-    loadData();
-  }, [router]);
+  const handleEditPasswordClose = () => {
+    setIsOpenPasswordModal(false);
+  };
 
-  const toggleNav = () => setNavOpen((prev) => !prev);
+  if (user)
+    return (
+      <div className="h-full border-2 border-[var(--color-content-border)]">
+        {isEditing && user && (
+          <EditModal onClose={handleEditClose}>
+            <EditUserForm
+              user={user}
+              setUser={setUser}
+              closeModal={handleEditClose}
+              handleEditPasswordClick={handleEditPasswordClick}
+            />
+          </EditModal>
+        )}
 
-  if (loading || !user) {
-    return <div className="p-4">Loading...</div>;
-  }
+        {isOpenPasswordModal && (
+          <EditModal onClose={handleEditPasswordClose}>
+            <EditPasswordForm closeModal={handleEditPasswordClose} />
+          </EditModal>
+        )}
 
-  const recommendedTweets = tweets.filter((t) => t.userId !== user.id).slice(0, 6);
-  const recommendedUsers = users
-    .filter((u) => u.id !== user.id)
-    .filter((u) => !user.followingIds.includes(u.id));
-  const userTweets = tweets.filter((t) => t.userId === user.id);
-
-  return (
-    <div className="w-full min-h-screen grid md:grid-cols-[1fr_50%_1fr] overflow-y-auto">
-      <Navbar isOpen={isNavOpen} toggleNavAction={toggleNav} user={user} />
-      <MainContent
-        handleBurgerClick={toggleNav}
-        user={user}
-        setUser={setUser}
-        tweets={userTweets}
-      />
-      <SearchBar users={recommendedUsers} tweets={recommendedTweets} />
-    </div>
-  );
+        <ProfileContentHeader handleBurgerClick={toggleNav}>
+          <div>
+            <p className="font-bold text-md">{`${user.firstName} ${user.secondName}`}</p>
+            <p className="text-sm">{`${tweets.length} tweets`}</p>
+          </div>
+        </ProfileContentHeader>
+        <UserProfileInfo user={user}>
+          <SimpleButton
+            handleClickAction={handleEditClick}
+            title={'Edit profile'}
+            className="text-sm h-[35px] py-2 hidden md:block"
+          />
+        </UserProfileInfo>
+        <AddTweetForm user={user} />
+        <TweetList tweets={tweets} user={user} />
+      </div>
+    );
 }

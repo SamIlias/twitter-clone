@@ -1,8 +1,7 @@
 import { FC, useState } from 'react';
 
 import { User } from '@/entities/User/model/types';
-import { UserCard } from '@/entities/User/ui/UserCard';
-import { Button, ButtonType } from '@/shared/ui/Buttons';
+import { UserCardWithFollow } from '@/entities/User/ui/UserCardWithFollow';
 
 interface RecommendedUsersProps {
   users: User[];
@@ -20,18 +19,7 @@ export const RecommendedUsers: FC<RecommendedUsersProps> = ({ users }) => {
     <div className="rounded-lg bg-gray-400/20 p-4">
       <h1 className="text-xl font-bold mb-5">You might like</h1>
       {visibleUsers.map((user) => {
-        return (
-          <div key={user.id} className="grid grid-cols-[70%_30%] gap-2 my-2">
-            <UserCard user={user} className="text-sm" />
-            <Button
-              variant={ButtonType.PRIMARY}
-              onClick={handleFollow}
-              className="h-[35px] text-sm"
-            >
-              Follow
-            </Button>
-          </div>
-        );
+        return <UserCardWithFollow key={user.id} user={user} onFollow={handleFollow} />;
       })}
 
       {users.length > 2 && (

@@ -6,7 +6,7 @@ import { cn } from '@/shared/lib/utils';
 
 interface AvaImageProps {
   avaUrl: string | StaticImageData;
-  size: number;
+  size?: number;
   className?: string;
 }
 
@@ -14,7 +14,7 @@ export const AvaImage: FC<AvaImageProps> = ({ avaUrl, size, className = '' }) =>
   return (
     <div
       className={cn('relative overflow-hidden rounded-full', className)}
-      style={{ width: size, height: size }}
+      style={size ? { width: size, height: size } : undefined}
     >
       <Image src={avaUrl || defaultAva} alt="ava" fill className="object-cover" />
     </div>

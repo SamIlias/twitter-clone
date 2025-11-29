@@ -5,6 +5,7 @@ import { Tweet } from '@/entities/Tweet/model/types';
 import { User } from '@/entities/User/model/types';
 import { AvaImage } from '@/entities/User/ui/AvaImage';
 import { UserNameBlock } from '@/entities/User/ui/UserNameBlock';
+import { formatDate } from '@/shared/lib/date';
 import { ButtonWithScaling } from '@/shared/ui/Buttons/ButtonWithScaling';
 import { HeartIcon } from '@/shared/ui/Icons/SVG';
 
@@ -21,18 +22,18 @@ export const TweetComponent: FC<TweetProps> = ({ tweet, user }) => {
 
   return (
     <div className="flex gap-3">
-      <AvaImage avaUrl={user.avaUrl} size={50} />
+      <AvaImage avaUrl={user.avaUrl} className="w-[30px] h-[30px] md:w-[50px] md:h-[50px]" />
 
       <div className="w-full relative flex flex-col gap-2">
-        <div className="flex gap-2">
+        <div className="flex flex-col md:flex-row gap-2">
           <UserNameBlock
             firstName={user.firstName}
             secondName={user.secondName}
             telegramLink={user.telegramLink}
-            className="flex gap-2"
+            className="flex gap-2 flex-col md:flex-row"
           />
 
-          <span className="self-start text-[var(--color-text-placeholder)]">{`· ${tweet.createdAt}`}</span>
+          <span className="md:self-center text-[var(--color-text-placeholder)] text-sm">{`${formatDate(tweet.createdAt)}`}</span>
         </div>
         <span>{tweet.textContent}</span>
         {tweet.image && (

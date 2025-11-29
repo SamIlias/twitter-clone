@@ -21,7 +21,7 @@ export const UserNameBlock: FC<UserNameBlockProps> = ({
       <div className={`font-bold`}>
         {firstName} {secondName}
       </div>
-      <div className={`text-[var(--color-text-placeholder)] text-[0.9em] self-center`}>
+      <div className={`text-[var(--color-text-placeholder)] text-[0.9em] md:self-center`}>
         {telegramLink}
       </div>
     </div>
