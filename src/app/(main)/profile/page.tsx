@@ -7,7 +7,7 @@ import { useNav } from '@/app/(main)/context/NavContext';
 import { useUser } from '@/app/(main)/context/UserContext';
 import { EditUserForm } from '@/app/(main)/profile/EditUserForm';
 import { EditPasswordForm } from '@/app/(main)/profile/EditUserForm/EditPasswordForm';
-import { ProfileContentHeader } from '@/app/(main)/profile/ProfileContentHeader';
+import { MainContentHeader } from '@/app/(main)/profile/MainContentHeader';
 import { Tweet } from '@/entities/Tweet/model/types';
 import { AddTweetForm } from '@/entities/Tweet/ui/AddTweetForm';
 import { TweetList } from '@/entities/Tweet/ui/TweetList';
@@ -79,12 +79,12 @@ export default function MyProfilePage() {
           </EditModal>
         )}
 
-        <ProfileContentHeader handleBurgerClick={toggleNav}>
+        <MainContentHeader handleBurgerClick={toggleNav}>
           <div>
             <p className="font-bold text-md">{`${user.firstName} ${user.secondName}`}</p>
             <p className="text-sm">{`${tweets.length} tweets`}</p>
           </div>
-        </ProfileContentHeader>
+        </MainContentHeader>
         <UserProfileInfo user={user}>
           <SimpleButton
             handleClickAction={handleEditClick}
@@ -93,7 +93,7 @@ export default function MyProfilePage() {
           />
         </UserProfileInfo>
         <AddTweetForm user={user} setTweets={handleSettingCreatedTweet} />
-        <TweetList tweets={tweets} user={user} />
+        <TweetList title={'Tweets'} tweets={tweets} users={[user]} />
       </div>
     );
 }

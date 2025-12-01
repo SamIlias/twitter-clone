@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
 
 import { Tweet } from '@/entities/Tweet/model/types';
@@ -19,13 +20,15 @@ export const TweetComponent: FC<TweetProps> = ({ tweet, user }) => {
   const handleLikeClick = () => {
     setIsLiked((prev) => !prev);
   };
+  const router = useRouter();
+  const handleNameBlockClick = () => router.push(`/users/${user.id}`);
 
   return (
     <div className="flex gap-3">
       <AvaImage avaUrl={user.avaUrl} className="w-[30px] h-[30px] md:w-[50px] md:h-[50px]" />
 
-      <div className="w-full relative flex flex-col gap-2">
-        <div className="flex flex-col md:flex-row gap-2">
+      <div className="w-full relative flex flex-col gap-2" onClick={handleNameBlockClick}>
+        <div className="flex flex-col md:flex-row gap-2 cursor-pointer">
           <UserNameBlock
             firstName={user.firstName}
             secondName={user.secondName}

@@ -5,12 +5,12 @@ import { UserCardWithFollow } from '@/entities/User/ui/UserCardWithFollow';
 
 interface RecommendedUsersProps {
   users: User[];
+  onFollowSuccess: () => void;
 }
 
-export const RecommendedUsers: FC<RecommendedUsersProps> = ({ users }) => {
+export const RecommendedUsers: FC<RecommendedUsersProps> = ({ users, onFollowSuccess }) => {
   const [expanded, setExpanded] = useState(false);
 
-  const handleFollow = () => {};
   const toggleShowMore = () => setExpanded((prev) => !prev);
 
   const visibleUsers = expanded ? users : users.slice(0, 2);
@@ -19,7 +19,7 @@ export const RecommendedUsers: FC<RecommendedUsersProps> = ({ users }) => {
     <div className="rounded-lg bg-gray-400/20 p-4">
       <h1 className="text-xl font-bold mb-5">You might like</h1>
       {visibleUsers.map((user) => {
-        return <UserCardWithFollow key={user.id} user={user} onFollow={handleFollow} />;
+        return <UserCardWithFollow key={user.id} user={user} onFollowSuccess={onFollowSuccess} />;
       })}
 
       {users.length > 2 && (

@@ -3,10 +3,13 @@ import { use, useEffect, useState } from 'react';
 
 import { getTweetsByUserId } from '@/api/getTweets';
 import { useNav } from '@/app/(main)/context/NavContext';
-import { ProfileContentHeader } from '@/app/(main)/profile/ProfileContentHeader';
+import { useUser } from '@/app/(main)/context/UserContext';
+import { MainContentHeader } from '@/app/(main)/profile/MainContentHeader';
 import { Tweet } from '@/entities/Tweet/model/types';
 import { TweetList } from '@/entities/Tweet/ui/TweetList';
+import { follow } from '@/entities/User/api/follow';
 import { getUserById } from '@/entities/User/api/getUserById';
+import { unfollow } from '@/entities/User/api/unfollow';
 import { User } from '@/entities/User/model/types';
 import { UserProfileInfo } from '@/entities/User/ui';
 import { Button, ButtonType } from '@/shared/ui/Buttons';
@@ -23,6 +26,9 @@ export default function UserProfilePage({ params }: UserProfileProps) {
   const [error, setError] = useState<unknown>(null);
   const { id } = use(params);
   const { toggleNav } = useNav();
+
+  const { user, refreshUser } = useUser();
+  const me = user;
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -50,28 +56,47 @@ export default function UserProfilePage({ params }: UserProfileProps) {
     if (id) loadTweets();
   }, [id]);
 
-  const handleFollowClick = () => {};
+  const handleFollow = async () => {
+    try {
+      await follow(id);
+      refreshUser();
+      const updatedProfileuser = await getUserById(id);
+      setProfileUser(updatedProfileuser);
+    } catch (error) {
+      setError(error);
+    }
+  };
 
-  if (error) return <CustomErrorMessage error={error} />;
+  const handleUnfollow = async () => {
+    try {
+      await unfollow(id);
+      refreshUser();
+      const updatedProfileuser = await getUserById(id);
+      setProfileUser(updatedProfileuser);
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  const isFollowing = me?.followingIds.includes(Number(id));
 
   if (profileUser)
     return (
       <div className="h-full border-2 border-[var(--color-content-border)]">
-        <ProfileContentHeader handleBurgerClick={toggleNav}>
+        <MainContentHeader handleBurgerClick={toggleNav}>
           <BackLink />
-        </ProfileContentHeader>
-
+        </MainContentHeader>
+        <CustomErrorMessage error={error} />;
         <UserProfileInfo user={profileUser}>
           <Button
-            variant={ButtonType.PRIMARY}
-            onClick={handleFollowClick}
+            variant={isFollowing ? ButtonType.SIMPLE : ButtonType.PRIMARY}
+            onClick={isFollowing ? handleUnfollow : handleFollow}
             className="h-[35px] text-sm mt-10"
           >
-            Follow
+            {isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
         </UserProfileInfo>
-
-        <TweetList tweets={tweets} user={profileUser} />
+        <TweetList title={'Tweets'} tweets={tweets} users={[profileUser]} />
       </div>
     );
 }

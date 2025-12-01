@@ -9,7 +9,7 @@ interface HeaderProps {
   children?: ReactNode;
 }
 
-export const ProfileContentHeader: FC<HeaderProps> = ({ handleBurgerClick, children }) => {
+export const MainContentHeader: FC<HeaderProps> = ({ handleBurgerClick, children }) => {
   return (
     <div className="py-4 px-6 flex justify-between">
       {children}
