@@ -1,9 +1,9 @@
-import { FC, ReactNode } from 'react';
+import { FC, MouseEvent, ReactNode } from 'react';
 
 import { cn } from '@/shared/lib/utils';
 
 interface ButtonProps {
-  handleClick: () => void;
+  handleClick: (e: MouseEvent<HTMLButtonElement>) => void;
   children: ReactNode;
   className?: string;
 }

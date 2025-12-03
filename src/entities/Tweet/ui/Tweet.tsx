@@ -1,13 +1,17 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { FC, useState } from 'react';
+import { FC, MouseEvent, useEffect, useState } from 'react';
 
+import { getLikesCount } from '@/entities/Tweet/api/getCount';
+import { getIsLiked } from '@/entities/Tweet/api/getIsLiked';
+import { toggleLike } from '@/entities/Tweet/api/toggleLike';
 import { Tweet } from '@/entities/Tweet/model/types';
 import { User } from '@/entities/User/model/types';
 import { AvaImage } from '@/entities/User/ui/AvaImage';
 import { UserNameBlock } from '@/entities/User/ui/UserNameBlock';
 import { formatDate } from '@/shared/lib/date';
 import { ButtonWithScaling } from '@/shared/ui/Buttons/ButtonWithScaling';
+import { CustomErrorMessage } from '@/shared/ui/ErrorMessage';
 import { HeartIcon } from '@/shared/ui/Icons/SVG';
 
 interface TweetProps {
@@ -17,10 +21,42 @@ interface TweetProps {
 
 export const TweetComponent: FC<TweetProps> = ({ tweet, user }) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
-  const handleLikeClick = () => {
-    setIsLiked((prev) => !prev);
-  };
+  const [error, setError] = useState<unknown>(null);
+  const [likesCount, setLikesCount] = useState(0);
   const router = useRouter();
+
+  useEffect(() => {
+    const loadTweetInfo = async () => {
+      try {
+        setError(null);
+
+        const isLikedRes = await getIsLiked(tweet.id);
+        if (isLikedRes) setIsLiked(isLikedRes.isLiked);
+
+        const countLikes = await getLikesCount(tweet.id);
+        if (countLikes) setLikesCount(countLikes.count);
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    loadTweetInfo();
+  }, [tweet.id]);
+
+  const handleLikeClick = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    try {
+      setError(null);
+      const likedRes = await toggleLike(tweet.id);
+      if (likedRes) setIsLiked(likedRes.liked);
+
+      const countLikes = await getLikesCount(tweet.id);
+      if (countLikes) setLikesCount(countLikes.count);
+    } catch (err) {
+      setError(err);
+    }
+  };
+
   const handleNameBlockClick = () => router.push(`/users/${user.id}`);
 
   return (
@@ -38,6 +74,7 @@ export const TweetComponent: FC<TweetProps> = ({ tweet, user }) => {
 
           <span className="md:self-center text-[var(--color-text-placeholder)] text-sm">{`${formatDate(tweet.createdAt)}`}</span>
         </div>
+        <CustomErrorMessage error={error} />
         <span>{tweet.textContent}</span>
         {tweet.image && (
           <div className="relative w-full h-64 mt-2 rounded-lg overflow-hidden">
@@ -48,7 +85,7 @@ export const TweetComponent: FC<TweetProps> = ({ tweet, user }) => {
           <ButtonWithScaling handleClick={handleLikeClick} className="focus:outline-none">
             <HeartIcon color="red" filled={isLiked} />
           </ButtonWithScaling>
-          <span className="px-2">{tweet.likes}</span>
+          <span className="px-2">{likesCount}</span>
         </div>
       </div>
     </div>
