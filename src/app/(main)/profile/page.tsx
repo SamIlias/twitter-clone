@@ -92,7 +92,7 @@ export default function MyProfilePage() {
             className="text-sm h-[35px] py-2 hidden md:block"
           />
         </UserProfileInfo>
-        <AddTweetForm user={user} setTweets={handleSettingCreatedTweet} />
+        <AddTweetForm user={user} addTweet={handleSettingCreatedTweet} />
         <TweetList title={'Tweets'} tweets={tweets} users={[user]} />
       </div>
     );

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FC, MouseEvent, useEffect, useState } from 'react';
 
@@ -72,15 +71,38 @@ export const TweetComponent: FC<TweetProps> = ({ tweet, user }) => {
             className="flex gap-2 flex-col md:flex-row"
           />
 
-          <span className="md:self-center text-[var(--color-text-placeholder)] text-sm">{`${formatDate(tweet.createdAt)}`}</span>
+          <span className="md:self-center text-[var(--color-text-placeholder)] text-sm">
+            {formatDate(tweet.createdAt)}
+          </span>
         </div>
+
         <CustomErrorMessage error={error} />
+
         <span>{tweet.textContent}</span>
-        {tweet.image && (
-          <div className="relative w-full h-64 mt-2 rounded-lg overflow-hidden">
-            <Image src={tweet.image} alt="tweetImage" fill className="object-cover" />
+
+        {Array.isArray(tweet.images) && tweet.images.length > 0 && (
+          <div
+            className="
+          grid grid-cols-1 sm:grid-cols-2
+          gap-2 mt-2 w-full
+          rounded-lg overflow-hidden
+        "
+          >
+            {tweet.images.map((src, ind) => {
+              return (
+                <div key={ind} className="relative w-full overflow-hidden rounded-md aspect-video">
+                  <img
+                    src={src}
+                    alt="tweetImage"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              );
+            })}
           </div>
         )}
+
         <div className="flex">
           <ButtonWithScaling handleClick={handleLikeClick} className="focus:outline-none">
             <HeartIcon color="red" filled={isLiked} />

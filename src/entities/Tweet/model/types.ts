@@ -3,6 +3,5 @@ export interface Tweet {
   userId: number;
   textContent: string;
   createdAt: string;
-  image?: string | null;
-  likes: number;
+  images?: string[] | null;
 }

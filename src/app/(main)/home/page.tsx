@@ -60,7 +60,7 @@ export default function HomePage() {
       <MainContentHeader handleBurgerClick={toggleNav}>
         <p className="text-xl font-bold">Home</p>
       </MainContentHeader>
-      <AddTweetForm user={user} setTweets={handleSettingCreatedTweet} />
+      <AddTweetForm user={user} addTweet={handleSettingCreatedTweet} />
       <TweetList title={'Tweets from all users'} tweets={tweets} users={users} />
     </div>
   );

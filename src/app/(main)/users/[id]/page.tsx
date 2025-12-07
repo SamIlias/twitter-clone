@@ -86,7 +86,7 @@ export default function UserProfilePage({ params }: UserProfileProps) {
         <MainContentHeader handleBurgerClick={toggleNav}>
           <BackLink />
         </MainContentHeader>
-        <CustomErrorMessage error={error} />;
+        <CustomErrorMessage error={error} />
         <UserProfileInfo user={profileUser}>
           <Button
             variant={isFollowing ? ButtonType.SIMPLE : ButtonType.PRIMARY}

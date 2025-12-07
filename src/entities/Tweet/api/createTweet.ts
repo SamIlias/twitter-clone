@@ -5,7 +5,7 @@ import { API_BASE_URL } from '@/shared/constants';
 
 export interface CreateTweetPayload {
   textContent: string;
-  image?: string;
+  images?: string[];
 }
 
 export async function createTweet(payload: CreateTweetPayload): Promise<Tweet | null> {
