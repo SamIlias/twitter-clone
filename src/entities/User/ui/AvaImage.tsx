@@ -1,11 +1,10 @@
-import Image, { StaticImageData } from 'next/image';
 import { FC } from 'react';
 
-import defaultAva from '@/shared/assets/exampleUser/avaImage.png';
+import { defaultAvaUrl } from '@/shared/constants';
 import { cn } from '@/shared/lib/utils';
 
 interface AvaImageProps {
-  avaUrl: string | StaticImageData;
+  avaUrl: string;
   size?: number;
   className?: string;
 }
@@ -16,7 +15,7 @@ export const AvaImage: FC<AvaImageProps> = ({ avaUrl, size, className = '' }) =>
       className={cn('relative overflow-hidden rounded-full', className)}
       style={size ? { width: size, height: size } : undefined}
     >
-      <Image src={avaUrl || defaultAva} alt="ava" fill className="object-cover" />
+      <img src={avaUrl || defaultAvaUrl} alt="ava" className="w-full h-full object-cover" />
     </div>
   );
 };

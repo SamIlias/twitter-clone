@@ -81,13 +81,7 @@ export const TweetComponent: FC<TweetProps> = ({ tweet, user }) => {
         <span>{tweet.textContent}</span>
 
         {Array.isArray(tweet.images) && tweet.images.length > 0 && (
-          <div
-            className="
-          grid grid-cols-1 sm:grid-cols-2
-          gap-2 mt-2 w-full
-          rounded-lg overflow-hidden
-        "
-          >
+          <div className="grid gap-2 mt-2 w-full rounded-lg overflow-hidden">
             {tweet.images.map((src, ind) => {
               return (
                 <div key={ind} className="relative w-full overflow-hidden rounded-md aspect-video">

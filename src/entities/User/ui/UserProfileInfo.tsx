@@ -1,11 +1,10 @@
-import Image from 'next/image';
 import { FC, ReactNode } from 'react';
 
 import { User } from '@/entities/User/model/types';
 import { AvaImage } from '@/entities/User/ui/AvaImage';
 import { UserFollowsStat } from '@/entities/User/ui/UserFollowsStat';
 import { UserNameBlock } from '@/entities/User/ui/UserNameBlock';
-import defaultBanner from '@/shared/assets/exampleUser/userBanner.png';
+import { defaultBannerUrl } from '@/shared/constants';
 
 interface UserProfileProps {
   user: User;
@@ -17,11 +16,10 @@ export const UserProfileInfo: FC<UserProfileProps> = ({ user, children }) => {
     <div className="shadow-gray-500/50 shadow-sm">
       <div className="h-[320px] grid grid-rows-[78%_1fr] relative">
         <div className="relative ">
-          <Image
-            src={user.bannerUrl || defaultBanner}
+          <img
+            src={user.bannerUrl || defaultBannerUrl}
             alt={'banner'}
-            fill
-            className="object-cover object-center"
+            className="object-cover h-full w-full"
           />
         </div>
 

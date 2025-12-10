@@ -1,8 +1,5 @@
-import Image from 'next/image';
 import { FC, useEffect, useMemo } from 'react';
 
-import defaultAva from '@/shared/assets/exampleUser/avaImage.png';
-import defaultBanner from '@/shared/assets/exampleUser/userBanner.png';
 import { ImageUploadButton } from '@/shared/ui/ImageSelector/ImageUploadButton';
 import { useImageValidation } from '@/shared/ui/ImageSelector/SelectSingleImageBlock/useImageValidation';
 
@@ -59,7 +56,7 @@ export const SelectSingleImage: FC<SelectSingleImageProps> = ({
       <div className="flex flex-col items-end gap-1">
         {previewUrl && (
           <div className="relative h-[80px] w-[80px]">
-            <Image src={previewUrl} alt="Preview" fill className="object-cover rounded" />
+            <img src={previewUrl} alt="Preview" className="w-full h-full object-cover rounded" />
 
             <button
               type="button"

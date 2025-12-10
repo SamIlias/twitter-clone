@@ -56,10 +56,12 @@ export default function CreateUserForm() {
         const payload = await createPayloadFromValues(values);
         await register(payload);
 
-        const loginResponse = await loginUser(values);
+        const loginResponse = await loginUser({
+          email: values.email.toLowerCase(),
+          password: values.password,
+        });
         if (loginResponse?.message === 'ok') {
           router.push(ROUTES.PROFILE);
-          return;
         }
 
         setError('Unexpected login response');
